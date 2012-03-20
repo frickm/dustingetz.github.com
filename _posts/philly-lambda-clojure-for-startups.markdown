@@ -117,11 +117,11 @@ once we have convinced ourselves that Clojure helps us manage risk, we do these 
 
 
 Paul seems to be speaking from the perspective of maximizing clojure adoption, not why clojure.
---
+//
 after you stimulate team usage, team picks up, groks it. biggest risk - can i get enough talent, and can i teach my team how to program in clojure effectively? Case stides World Singles - Sean COrfield (a clojure contributor)  he used coldfusion before, switched to clojure. risk: we have to switch platforms, CF s dead, how towe do it?
 
 so if we can sell them on so easy, they're going to adopt it naturally. just need that first hump. get stuck in the feedback hump on Crux slide which is great - start kicking ass - "kick ass circle" haha. (ed zone baby) clojure lets you hit thiz zone better than any other technology.
---
+//
 
 
 

@@ -3,6 +3,6 @@ layout: default
 title: Text Post
 ---
 
-h1. { { page.title } }
+# {{ page.title }}
 
 Test test test.

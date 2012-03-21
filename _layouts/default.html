@@ -1,10 +1,75 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<div class="content">
-{{ content }}
-</div>
+  <title>Dustin Getz</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="dustin getz" />
+  <meta name="description" content="Dustin Getz's blog" />
+  <meta http-equiv="imagetoolbar" content="no" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />  
+  <!-- <link rel="alternate" type="application/rss+xml" title="RSS feed" href="http://www.dustingetz.com/feed.xml" /> -->
+  
+  <!-- Easy framework includes -->
+  <link rel="stylesheet" href="/css/easy.css" media="screen" type="text/css" />
+  <link rel="stylesheet" href="/css/easyprint.css" media="print" type="text/css" />
+  <script type="text/javascript" src="/js/jquery.js"></script>
+  <script type="text/javascript" src="/js/easy.js"></script>
+  <script type="text/javascript" src="/js/main.js"></script>
+</head>
+
+<body>
+<div id="container">
+  <div id="header">
+    <ul id="nav">
+      <li><a href="/">Home</a></li>
+      <!-- <li><a href="/contact">Contact</a></li> -->
+<!-- 
+        <li>
+          <a href="http://easyframework.com/overview.php">Overview</a>
+          <ul>
+            <li><a href="#">Sub-navigation item</a></li>
+            <li><a href="#">Sub-navigation item</a></li>
+            <li><a href="#">Sub-navigation item</a></li>
+            <li><a href="#">Sub-navigation item</a></li>
+          </ul>
+        </li>
+        <li><a href="{{url}}">{{ url_linktext }}</a></li>
+-->
+    </ul>
+  </div><!-- header -->
+
+
+  <div class="content">
+    <div class="main">
+{{ content }}    
+    </div>
+
+    <div class="secondary">
+      <h2>Hi, I'm Dustin Getz.</h2>
+      <div id="about-me">
+	<div style="float:right; padding-left:11px"> 
+	  <img src="/images/dustingetz-150.jpg"/> 
+	  </div> 
+	<p style="text-align:justify">I'm a software engineer, currently trying to get really good, as fast as possible.
+	  I'm interested in functional programming and startups. 
+	  I write mostly just to get ideas out of my head, so I can get back to work. 
+	  If you like this, let me know, it would make my day!</p>
+	</div>
+      <div id="feeds">
+	<ul style="list-style: none">
+	  <li><a href="http://www.dustingetz.com/feed.xml">Follow this blog</a></li><!-- http://feeds.feedburner.com/dustingetz -->
+	  <li><a href="http://twitter.com/dustingetz">Follow @dustingetz</a></li>
+	  </ul>
+	</div> 
+      </div><!-- secondary -->
+
+    <div id="footer">
+      <p>&copy; Dustin Getz; design from <a href="http://easyframework.com">Easy</a></p>
+    </div>
+
+</div><!-- container -->
 
 </body>
 </html>

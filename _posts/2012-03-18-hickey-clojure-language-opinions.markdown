@@ -4,6 +4,7 @@ title: Clojure encourages immutable style, Common Lisp does not
 ---
 
 # {{ page.title }}
+
 (from video [Expert to Expert: Rich Hickey and Brian Beckman - Inside Clojure](http://channel9.msdn.com/shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure/), 
 transcribed and slightly edited for clarity by me)
 

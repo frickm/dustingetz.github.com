@@ -1,10 +1,13 @@
-layout: post
-title: Philly Lambda presents: Paul deGrandis on Clojure Powered Startups
--
+---
+layout: default
+title: Philly Lambda presents Paul deGrandis on Clojure Powered Startups
+---
+
+# {{ page.title }}
 
 Philly Lambda notes - 12 march 2012 
 sponsored by Comcast Interactive Media; cimlife.com
-# {{ page.title }}
+
 *ed: this is my personal take on Paul's lecture, the discussion has been organized, re-ordered, edited and clarified by me. My own opinions have inevitably leaked into this.*
 
 speaker: Paul deGrandis

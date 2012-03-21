@@ -4,20 +4,18 @@ title: Philly Lambda presents: Paul deGrandis on Clojure Powered Startups
 
 Philly Lambda notes - 12 march 2012 
 sponsored by Comcast Interactive Media; cimlife.com
-{{ page.title }}
-========
-[ed: this is my personal take on Paul's lecture, the discussion has been organized, re-ordered, edited and clarified by me. My own opinions have inevitably leaked into this. ]
+# {{ page.title }}
+*ed: this is my personal take on Paul's lecture, the discussion has been organized, re-ordered, edited and clarified by me. My own opinions have inevitably leaked into this.*
 
 speaker: Paul deGrandis
 - VP Engineering at Tutorspree, worked briefly at CIM, lives in NYC now
 - giving this talk for clojure/west on march 16
 
-a CTOs job is to manage risk
---------------
+## a CTOs job is to manage risk
 
 if clojure adoption and clojure success is on the rise, where are the success stories? whats the best way to apply clojure?
 
-Neal Ford talk at Conj last autumn - [master plan for enterprise domination (slides)](http://nealford.com/downloads/conferences/Clojure_Masterplan(Neal_Ford).pdf) [ed: Neal's talk focuses on out-of-band factors - why do some technologies become popular? how can we leverage this to make clojure popular in enterprise?] 
+Neal Ford talk at Conj last autumn - [master plan for enterprise domination (slides)](http://nealford.com/downloads/conferences/Clojure_Masterplan(Neal_Ford).pdf) *ed: Neal's talk focuses on out-of-band factors - why do some technologies become popular? how can we leverage this to make clojure popular in enterprise?*
 
 Neal Ford: CTOs are driven by fear, make decisions worried about making the wrong decisions. evaluate risk, unknowns, failure changes. true of large enterprises, true for startups. we make decisions for evaluation risk. in order to do this, need objective data, rapid adaptation - so i can instantly realize what is wrong, i need tools that allow me to see and switch real fast. spiral iteration. risk driven architectures. want to take the unknowns, how can we find more info about them, navigate the space as flexible as we possibly can. success is - winnning at the risks, beating the odds.
 
@@ -42,25 +40,25 @@ community is infectious - winning product needs winning team - winning team need
 
 clojure forces you to think problems in a bottom up way. build legos to solve his learning problem - in other langages, you have to actively try harder to do this. other startp collective intelligence problem. he did it in python, extremely funtional python - but he had to try real hard, had 
 
-note both Paul and Kyle (mobile banking) are using Rails as their web layer. reasons cited: maturity of platform. [ed: this surprised me, I'd like to know more about this, as I think clojure would be ideal for the enterprise vertical app i work on, including middle tier. I think there is a mismatch in approaches - the enterprise frontend is heavily data oriented with ajax services side by side with business state routines, as opposed to Tutorspree's frontend which is mostly presenting content as markup? Kyle's web layer, is it a frontend to his mobile banking infrastructure? I wonder if his web layer is only relevant to the internet-facing website, thus there's no complex backend logic, which makes Rails a better fit? this is purely speculative. Tutorspree's frontend certainly has core value, Paul talks of monitoring user actions like click locations in order to figure out learning styles and match up with tutors]
+note both Paul and Kyle (mobile banking) are using Rails as their web layer. reasons cited: maturity of platform. *ed: this surprised me, I'd like to know more about this, as I think clojure would be ideal for the enterprise vertical app i work on, including middle tier. I think there is a mismatch in approaches - the enterprise frontend is heavily data oriented with ajax services side by side with business state routines, as opposed to Tutorspree's frontend which is mostly presenting content as markup? Kyle's web layer, is it a frontend to his mobile banking infrastructure? I wonder if his web layer is only relevant to the internet-facing website, thus there's no complex backend logic, which makes Rails a better fit? this is purely speculative. Tutorspree's frontend certainly has core value, Paul talks of monitoring user actions like click locations in order to figure out learning styles and match up with tutors*
 
 Q (Dustin): Clojure vs python. Why is clojure so much better?
-A (Paul): clojure as a community, toolset, language - forces you to be bottom up. build on the smallest nugget, building blocks, that you can build with. a bucket of legos. [ed: Paul implies this is something that python is less good at - i agree - needs more thought]. 
+A (Paul): clojure as a community, toolset, language - forces you to be bottom up. build on the smallest nugget, building blocks, that you can build with. a bucket of legos. *ed: Paul implies this is something that python is less good at - i agree - needs more thought.* 
 
-python: write a reduce that grows a collection - due to native list datastructure being mutable, this implies a copy. [ed: also no official support for tail recursion - Guido van Rossom says ["I don't want TRE in the language... short answer, it's simply unpythonic."](http://neopythonic.blogspot.com/2009/04/tail-recursion-elimination.html)] 
+python: write a reduce that grows a collection - due to native list datastructure being mutable, this implies a copy. *ed: also no official support for tail recursion - Guido van Rossom says ["I don't want TRE in the language... short answer, it's simply unpythonic."](http://neopythonic.blogspot.com/2009/04/tail-recursion-elimination.html)*
 
 "python's datastructures just aren't designed to be functional from the bottom up." Paul(?) at one point was writing highly functional python for a machine learning business, and became frustrated by this - if you want to take a functional style all the way, you want language support. Rich Hickey quote: https://docs.google.com/document/pub?id=1Vgbw3hGCye2rtmnZ6iSGy0WfY9aElE3SX3WbXn2-bAA
 
-[ed: here are a few python implementations of reduce and map to see what he means - the naive recursive implementation ("the functionally pure way")  can overflow the stack, and using reduce to implement map implies a concatenation operator, which in python is a copy. we could implement our own persistent data structures that are immutable so they don't need this copy, and copy this to and from native lists, but when you start bending the language in a way that hte language doesn't like, the community hates it, teams will revolt, etc.]  https://github.com/dustingetz/sandbox/blob/master/etc/map.py
+*ed: here are a few python implementations of reduce and map to see what he means - the naive recursive implementation ("the functionally pure way")  can overflow the stack, and using reduce to implement map implies a concatenation operator, which in python is a copy. we could implement our own persistent data structures that are immutable so they don't need this copy, and copy this to and from native lists, but when you start bending the language in a way that hte language doesn't like, the community hates it, teams will revolt, etc.*  https://github.com/dustingetz/sandbox/blob/master/etc/map.py
 
-Same with Java - you can write functional-style Java, but its not batteries included, need third party libraries like Google Guava which is full of hacks to short circuit reflection, allow you to do reduce, etc [ed: I don't have a source on this quote and I don't recall who said it - in my experience with functional java, I just implement the basic functional operations imperatively and ignore the cost of copies because we're a webapp and copies will never be a bottleneck. the boilerplate surrounding function objects in Java is the real barrier to adoption, makes things look much scarier than they really are to teammates such that they prefer to filter with a for loop. All this said, I still feel a functional style helps us write code faster with less bugs, its just much less awesome than with native language support.] 
+Same with Java - you can write functional-style Java, but its not batteries included, need third party libraries like Google Guava which is full of hacks to short circuit reflection, allow you to do reduce, etc *ed: I don't have a source on this quote and I don't recall who said it - in my experience with functional java, I just implement the basic functional operations imperatively and ignore the cost of copies because we're a webapp and copies will never be a bottleneck. the boilerplate surrounding function objects in Java is the real barrier to adoption, makes things look much scarier than they really are to teammates such that they prefer to filter with a for loop. All this said, I still feel a functional style helps us write code faster with less bugs, its just much less awesome than with native language support.*
 
 
 Ben: clojure is not the only conceivable language to do these things: first class functions,  sane mutability, etc. We talked a bit about haskell but I don't have great notes - 
 
 Dan Mead: "i dont write haskell for performance" 
 Nick C: trying to get a lot of hands on haskell can be a problem.
-Dan Mead: haskell was very academicy things in our brain. SPJ (creator of haskell) says its supposed to have a trickle down effect to other languages. haskel - first language to study monads, they have trickled into clojure now. [ed: and scala, and perhaps even javascript: [jQuery is a Monad](http://importantshock.wordpress.com/2009/01/18/jquery-is-a-monad/)]
+Dan Mead: haskell was very academicy things in our brain. SPJ (creator of haskell) says its supposed to have a trickle down effect to other languages. haskel - first language to study monads, they have trickled into clojure now. *ed: and scala, and perhaps even javascript: [jQuery is a Monad](http://importantshock.wordpress.com/2009/01/18/jquery-is-a-monad/)*
 
 Hunter H - Clojure is on jvm, and CLR sooner or later, and javscript (clojurescript) which is maturing quickly
 

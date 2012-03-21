@@ -1,0 +1,8 @@
+---
+layout: post
+title: Text Post
+---
+
+h1. { { page.title } }
+
+Test test test.

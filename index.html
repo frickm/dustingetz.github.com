@@ -1,6 +1,14 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>dustin getz</h1>
-</body>
-</html>
+---
+layout: default
+title: dustingetz
+---
+<div class="index-body">
+<h1>dustingetz</h1>
+
+    <h1>Recent Posts</h1>
+    <ul class="posts">
+      { %% for post in site.posts limit:5 %% }
+        <li><span>{ { post.date | date_to_string } }</span> &raquo; <a href="{ { post.url } }">{ { post.title } }</a></li>
+      { %% endfor %% }
+    </ul>
+</div>

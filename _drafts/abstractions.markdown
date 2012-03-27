@@ -37,6 +37,7 @@ scala is nice because its a fairly gentle transition, you can integrate with you
 
 ##at current abstraction level, why are abstractions important
 (this whole section is irrelevant or should be combined above, maybe this can be about)
+
 - hoare property, correct code, maintenance cycles from mythical man month. this will make software cheaper!
 - missing level of abstraction in win32, joel cruft code
 - leaky abstractions happen, fix the abstraction at the right layer

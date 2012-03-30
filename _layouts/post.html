@@ -8,16 +8,17 @@
   <meta name="keywords" content="dustin getz" />
   <meta name="description" content="Dustin Getz's blog" />
   <meta http-equiv="imagetoolbar" content="no" />
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />  
-  <link rel="alternate" type="application/rss+xml" title="RSS feed" href="http://www.dustingetz.com/feed.xml" /> 
-  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="alternate" type="application/rss+xml" title="RSS feed" href="http://www.dustingetz.com/feed.xml" />
+
   <!-- Easy framework includes -->
   <link rel="stylesheet" href="static/css/easy.css" media="screen" type="text/css" />
   <link rel="stylesheet" href="static/css/easyprint.css" media="print" type="text/css" />
+  <link rel="stylesheet" href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" media="screen" type="text/css" />
   <script type="text/javascript" src="static/js/jquery.js"></script>
   <script type="text/javascript" src="static/js/easy.js"></script>
   <script type="text/javascript" src="static/js/main.js"></script>
-  
+
   <!-- Google Analytics -->
   <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -31,7 +32,7 @@
   })();
   </script>
 
-  <style type="text/css"> 
+  <style type="text/css">
     p {
       margin-top: 0em;
       margin-bottom: 0em;
@@ -47,7 +48,7 @@
     <ul id="nav">
       <li><a href="/">Home</a></li>
       <!-- <li><a href="/contact">Contact</a></li> -->
-<!-- 
+<!--
         <li>
           <a href="http://easyframework.com/overview.php">Overview</a>
           <ul>
@@ -67,30 +68,30 @@
     <h1>Hi, I'm Dustin Getz.</h1>
     <div class="secondary">
       <div id="about-me">
-	<div style="float:left; padding-right: 11px"> 
-	  <img src="static/images/dustingetz-150.jpg"/> 
-	  </div> 
-	<p>I'm a software engineer, currently trying to get really good, as fast as possible.
-	  I'm interested in web development and entrepreneurship. 
-	  I write mostly just to get ideas out of my head, so I can get back to work. 
-	  If you like this, let me know, it would make my day!</p>
-	</div>
+        <div style="float:left; padding-right: 11px">
+          <img src="static/images/dustingetz-150.jpg"/>
+          </div>
+        <p>I'm a software engineer, currently trying to get really good, as fast as possible.
+          I'm interested in web development and entrepreneurship.
+          I write mostly just to get ideas out of my head, so I can get back to work.
+          If you like this, let me know, it would make my day!</p>
+        </div>
       <div id="feeds">
-	<ul style="list-style: none">
-	  <li><a href="http://www.dustingetz.com/feed.xml">Follow this blog</a></li><!-- http://feeds.feedburner.com/dustingetz -->
-	  <li><a href="http://twitter.com/dustingetz">Follow @dustingetz</a></li>
-	  </ul>
-	</div> 
+        <ul style="list-style: none">
+          <li><a href="http://www.dustingetz.com/feed.xml">Follow this blog</a></li><!-- http://feeds.feedburner.com/dustingetz -->
+          <li><a href="http://twitter.com/dustingetz">Follow @dustingetz</a></li>
+          </ul>
+        </div>
 
     <div class="main">
               <div id="posts">
-		<div><h3>{{post.title}} <a href="{{post.link}}">*</a></h3></div>
-		<div id="post-content">{{ post.body }}</div>
-		</div>
-	      </div>
-    
-    
-    
+                <div><h3>{{post.title}} <a href="{{post.link}}">*</a></h3></div>
+                <div id="post-content">{{ post.body }}</div>
+                </div>
+              </div>
+
+
+
     </div><!-- content -->
   <div id="footer">
     <p>&copy; Dustin Getz; design from <a href="http://easyframework.com">Easy</a></p>

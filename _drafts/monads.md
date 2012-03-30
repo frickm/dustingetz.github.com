@@ -1,0 +1,4 @@
+- http://www.intensivesystems.net/tutorials/monads_101.html
+- http://khinsen.wordpress.com/2009/04/22/monad-tutorial-for-clojure-programmers/
+- http://stackoverflow.com/questions/9881471/map-and-reduce-monad-for-clojure-what-about-a-juxt-monad
+- http://onclojure.com/2009/03/05/a-monad-tutorial-for-clojure-programmers-part-1/

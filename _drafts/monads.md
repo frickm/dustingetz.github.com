@@ -2,3 +2,14 @@
 - http://khinsen.wordpress.com/2009/04/22/monad-tutorial-for-clojure-programmers/
 - http://stackoverflow.com/questions/9881471/map-and-reduce-monad-for-clojure-what-about-a-juxt-monad
 - http://onclojure.com/2009/03/05/a-monad-tutorial-for-clojure-programmers-part-1/
+- http://stackoverflow.com/questions/3870088/a-monad-is-just-a-monoid-in-the-category-of-endofunctors-whats-the-problem
+- http://stackoverflow.com/questions/7796420/pattern-to-avoid-nested-try-catch-blocks
+- http://lostechies.com/derickbailey/2010/09/30/monads-in-c-which-part-is-the-monad/
+- "powershell cmdlets are monads" http://msdn.microsoft.com/en-us/library/ms714395%28VS.85%29.aspx
+- http://stackoverflow.com/questions/412929/creative-uses-of-monads
+- http://homepages.inf.ed.ac.uk/wadler/topics/monads.html
+- essense of FP (haskell monad intro): http://homepages.inf.ed.ac.uk/wadler/papers/essence/essence.ps
+- http://ndanger.org/blog/2008/01/16/error-handling-in-python-monads-are-too-much-for-me/
+- http://james-iry.blogspot.com/2007/11/monads-are-elephants-part-4.html
+- (cont monad is god monad) http://blog.sigfpe.com/2008/12/mother-of-all-monads.html
+- http://www.intensivesystems.net/tutorials/monads_101.html

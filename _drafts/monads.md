@@ -13,3 +13,5 @@
 - http://james-iry.blogspot.com/2007/11/monads-are-elephants-part-4.html
 - (cont monad is god monad) http://blog.sigfpe.com/2008/12/mother-of-all-monads.html
 - http://www.intensivesystems.net/tutorials/monads_101.html
+- 
+- http://programmers.stackexchange.com/questions/72557/how-do-you-design-programs-in-haskell-or-other-functional-programming-languages/72562#72562

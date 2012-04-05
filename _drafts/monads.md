@@ -1,6 +1,6 @@
 #Dustin's awesome monad tutorial for humans, in Python
 
-*[ed: draft, need to add all the citations still. Bank account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)]
+*[ed: draft, need to add all the citations still. Bank account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)]*
 
 > A monad is a monoid in the category of endofunctors, what's the problem?
 -- [James Iry](http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html)

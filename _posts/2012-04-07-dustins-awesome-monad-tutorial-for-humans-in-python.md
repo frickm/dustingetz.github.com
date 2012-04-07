@@ -377,7 +377,7 @@ output:
     Alex: [[(250000, None)], None, [(250000, None)], None]
     Fred: [None, 'No bank associated with name Fred']
 
-i gotta say, when this worked, i got really excited :)
+i gotta say, when this worked, i got really excited :) (edit oops this is not quite right, see superfluous Nones, TODO)
 
 TODO fix up the example code to support all the other errors too.
 

@@ -181,7 +181,6 @@ and here's how we use the API. Note, we aren't using monads, this is just a pyth
         print "%s: %s" % (name, loan)
 
 output:
-
     Irek: [250000, 250000, 250000]
     John: [250000, 250000, 250000]
     Alex: [250000, 250000]
@@ -250,8 +249,87 @@ output:
 
 Side note: it took me about 45 minutes to build a working `get_loan`. I kept getting lost in the error code, whether i'm looking at a list of tuples or a list of values, and what do i do if only one of the values failed but the others are valid.
 
-That damn plumbing, we took a nice 3 line list comprehension, and adding rigorous error handling turned everything crappy & confusing. When we start to see excessive plubming, we should reach for monads.
+That damn plumbing, we took a nice 3 line list comprehension, and adding rigorous error handling turned everything crappy, confusing, and fragile. Its no longer obvious if our business logic is even correct, and if there are bugs, its going to be more difficult than necessary to fix. When we start to see excessive plubming, we should reach for monads.
 
+Side note: compare what we have so far to an exception-based error handling approach. With exceptions, we need to be very careful to catch them at the lowest possible level, or they will break us out of a loop and cause an error in one of the loan requests to fail all of them! Exceptions can be dangerous.
+
+
+## list comprehensions with errors: combining seq_m and error_m (this one melts your mind.)
+
+(TODO: figure out an example that doesn't need lexical scope to work?)
+
+    # error monad
+    def error_unit(x): return success(x)
+
+    def error_bind(mval, mf):
+        """unpack monadic value from error monad into (val, error).
+        invoke mf(val), but only when there is not an error.
+        returns a result in error-monad."""
+        error = get_error(mval)
+        value = get_val(mval)
+        if error:
+            return mval
+        return mf(value)
+
+    def flatten(listOfLists):
+        """Flatten one level of nesting
+        http://docs.python.org/library/itertools.html#recipes"""
+        return chain.from_iterable(listOfLists)
+
+    # seq monad
+    def seq_unit(x): return [x]
+
+    def seq_bind(mval, mf):
+        """unpack a list of values, invoking mf(val) for each value. Each result is
+        a list of values, collect these lists into a single list.
+        returns a list of results in seq-monad."""
+        return flatten(map(mf, mval)) # not provided by python
+
+    # combined monad !!
+    def unit(x): return error_unit(seq_unit(x))
+    def bind(mval, mf): return error_bind(mval, lambda mval: seq_bind(mval, mf))
+
+TODO: wow, monad composition is super cool! I kind of want to handwave over this, because we can abstract it, beginners don't need to understand monad combiners ("transformers"?), Clojure provides it as a standard library.
+
+    def get_loan_wrong(name):
+
+        m_name = unit(name)
+        m_banks = bind(m_name, get_banks)
+
+        # trouble - get_accounts needs access to the wrapped value name
+        m_accounts = bind(m_banks, get_accounts)
+
+        # trouble - get_balance needs access to unwrapped values
+        balance = get_balance(bank, account)
+        return qualified_amount(balance)
+
+what if we do it with closures? try again:
+
+        balance = bind(unit(name), lambda name:
+                  bind(get_banks(name), lambda bank:
+                  bind(get_accounts(bank, name), lambda account:
+                           get_balance(bank, account))
+
+        return qualified_amount(balance)
+
+    def get_loan(name):
+
+        return bind(unit(name), lambda name:
+               bind(get_banks(name), lambda bank:
+               bind(get_accounts(bank, name), lambda account:
+                        unit(qualified_amount(get_balance(bank, account))))))
+
+
+this is the point where Python fails us: we need macros to fix up this syntax. There's a clear pattern which we cannot abstract further with just higher order functions! wow, powerful stuff. If you squint at this the right way, the usage is very similar to a native list comprehension, and in fact with macros, we would be able to have equivalent syntax to list comprehensions. Oh well.
+
+anyway, the output:
+
+    Irek: [[(250000, None)], None, [(250000, None)], None, [(250000, None)], None]
+    John: [[(250000, None)], None, [(250000, None)], None, [(250000, None)], None]
+    Alex: [[(250000, None)], None, [(250000, None)], None]
+    Fred: [None, 'No bank associated with name Fred']
+
+i gotta say, when this worked, i got really excited :)
 
 
 ## monadic function doesn't care which monad it's using

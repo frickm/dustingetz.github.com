@@ -302,11 +302,11 @@ I've changed the way the bind looks now. If you squint at it in the right light,
 
 The pattern we see here, bind-bind-...-bind-unit, is the way we will write it from here on out.
 
-This is the point where Python fails us: we need macros to fix up this syntax. There's a clear pattern which we cannot abstract further with macros, that we cann't abstract with just higher order functions [1]. Clojure provides a macro called `monad` which takes something that looks like a list comprehension, and re-writes it into the nested bind form we see here. If you squint at this the right way, the usage is very similar to a native list comprehension, and in fact with macros, we would be able to have equivalent syntax to list comprehensions. Oh well.
+This is the point where Python fails us: we need macros to fix up this syntax. There's a clear pattern which we cannot abstract further with macros, that we cann't abstract with just higher order functions*. Clojure provides a macro called `monad` which takes something that looks like a list comprehension, and re-writes it into the nested bind form we see here. If you squint at this the right way, the usage is very similar to a native list comprehension, and in fact with macros, we would be able to have equivalent syntax to list comprehensions. Oh well.
 
 I'm hand-waving over this a bit, you don't need to deeply understand this pattern in order to be able to wield it.
 
-[1] (TODO is this even true? can you abstract this further without macros? how would it look?)
+\* (TODO is this even true? can you abstract this further without macros? how would it look?)
 
 OK, now lets apply it to our banking example.
 

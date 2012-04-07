@@ -145,7 +145,9 @@ Monads let us think about functions that require plumbing as if they didn't have
 
 ## seq monad
 
-Suppose a person has multiple accounts at multiple banks, and we want to know their loan eligibility for each. Lets extend our API to support this. To make things simpler, lets forget about error handling for now.
+Suppose a person has multiple accounts at multiple banks, and we want to know their loan eligibility for each. Lets extend our API to support this.
+
+To make things simpler, lets forget about error handling for now.
 
     def get_banks(name):
         if name == "Irek": return ["Bank of America", "Chase"]
@@ -168,7 +170,7 @@ Suppose a person has multiple accounts at multiple banks, and we want to know th
         if balance > 200000: return balance
         else: return 0
 
-and here's how we use the API. Note, we aren't using monads, this is just a python list comprehension.
+and here's how we use the API. Note, we aren't using monads, this is just a python list comprehension. Nice and elegant, list comprehensions are beautiful.
 
     def get_loan_amount(name):
         return [ qualified_amount(get_balance(bank, account))
@@ -181,6 +183,7 @@ and here's how we use the API. Note, we aren't using monads, this is just a pyth
         print "%s: %s" % (name, loan)
 
 output:
+
     Irek: [250000, 250000, 250000]
     John: [250000, 250000, 250000]
     Alex: [250000, 250000]
@@ -188,7 +191,7 @@ output:
 
 so, that works just fine, but what about errors? Fred doesn't have any bank accounts, but if our API returns error tuples like we used earlier, our sexy list comprehension doesn't have the plumbing to handle error tuples. Lets see what all the error handling plumbing looks like:
 
-API first:
+First lets add errors back into our API:
 
     def success(val): return val, None
     def error(why): return None, why
@@ -253,37 +256,50 @@ That damn plumbing, we took a nice 3 line list comprehension, and adding rigorou
 
 Side note: compare what we have so far to an exception-based error handling approach. With exceptions, we need to be very careful to catch them at the lowest possible level, or they will break us out of a loop and cause an error in one of the loan requests to fail all of them! Exceptions can be dangerous.
 
+## seq_m to the rescue
+
+For now, lets take my word for it that sequence monad is relevant to our example, and do something simpler first.
+
+    TODO implement list comprehensions with seq-m.
+    TODO we need lexical scope with our bind now, which is ugly in python, lets talk about it anyway.
+
+OK, now lets apply it to our banking example.
 
 ## list comprehensions with errors: combining seq_m and error_m (this one melts your mind.)
 
-(TODO: figure out an example that doesn't need lexical scope to work?)
+lets recap the monads we're using so far. error monad:
 
-    # error monad
     def error_unit(x): return success(x)
 
     def error_bind(mval, mf):
         """unpack monadic value from error monad into (val, error).
         invoke mf(val), but only when there is not an error.
         returns a result in error-monad."""
+
+        #print "%s: %s" % (type(mval), mval)
+        assert isinstance(mval, tuple)
+
         error = get_error(mval)
         value = get_val(mval)
         if error:
             return mval
         return mf(value)
 
-    def flatten(listOfLists):
-        """Flatten one level of nesting
-        http://docs.python.org/library/itertools.html#recipes"""
-        return chain.from_iterable(listOfLists)
+sequence monad:
 
-    # seq monad
     def seq_unit(x): return [x]
 
     def seq_bind(mval, mf):
         """unpack a list of values, invoking mf(val) for each value. Each result is
         a list of values, collect these lists into a single list.
         returns a list of results in seq-monad."""
-        return flatten(map(mf, mval)) # not provided by python
+
+        #print "%s: %s" % (type(mval), mval)
+        assert isinstance(mval, list)
+
+        return flatten(map(mf, mval))
+
+but, we actually want to combine their behaviors, lets build a composed monad!
 
     # combined monad !!
     def unit(x): return error_unit(seq_unit(x))
@@ -305,20 +321,12 @@ TODO: wow, monad composition is super cool! I kind of want to handwave over this
 
 what if we do it with closures? try again:
 
-        balance = bind(unit(name), lambda name:
-                  bind(get_banks(name), lambda bank:
-                  bind(get_accounts(bank, name), lambda account:
-                           get_balance(bank, account))
-
-        return qualified_amount(balance)
-
     def get_loan(name):
 
         return bind(unit(name), lambda name:
                bind(get_banks(name), lambda bank:
                bind(get_accounts(bank, name), lambda account:
                         unit(qualified_amount(get_balance(bank, account))))))
-
 
 this is the point where Python fails us: we need macros to fix up this syntax. There's a clear pattern which we cannot abstract further with just higher order functions! wow, powerful stuff. If you squint at this the right way, the usage is very similar to a native list comprehension, and in fact with macros, we would be able to have equivalent syntax to list comprehensions. Oh well.
 
@@ -333,6 +341,8 @@ i gotta say, when this worked, i got really excited :)
 
 
 ## monadic function doesn't care which monad it's using
+
+TODO this needs to be grounded in the example
 
 lets define `m_map` which knows about the monadic plumbing:
 
@@ -349,20 +359,17 @@ lets define `m_map` which knows about the monadic plumbing:
 `mmap` knows about bind, but it doesn't care which `bind` we're using. This version of `mmap` will work with ANY monadic function, whether we're using the maybe-monad, the error-monad, or any other monad. The specific behavior of the monad is abstracted behind the `bind` and `unit` functions. If we write the code such that a different `bind` is in scope, `mmap` still works.
 
 
-## monads can be combined
-
-- change error monad to not short circuit (maybe monad does that), and then compose the monads to combine them
-- need python way to abstract away which monad we're "inside" of
-
 ## cont-m
 
-- make the bank API asynchronous, but keep composability
+TODO make the bank API asynchronous, but keep composability.
 
-## TODO
+We can make the underlying API asynchronous and callback-oriented, and we can abstract away all the callback plumbing with continuation monad, so we still look like function composition. wait, what? wait, yes. haha.
 
-I'm not sure where to go after that, and how to integrate this story with monad transformers. is there a use case for cont-m here? what benefit might we get from that, parallelism? laziness? falling back when a low-level error (like connection interrupted) occurs? state-monad for when the bank wants to know if someone is asking other banks for a loan? i'll want to compare the monadic code to traditional versions with only first-order functions, to demonstrate (or not!) that the monadic code leads to writing better code faster with less bugs.
+## other monads?
 
-
+- state monad - when a bank wants to know if person is asking other banks for a loan
+- parallelism, laziness?
+- restarting computations, in the event of a low level error that we can recover from? continuation monad again
 
 ## references
 

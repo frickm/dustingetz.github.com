@@ -383,21 +383,21 @@ TODO fix up the example code to support all the other errors too.
 
 ## monadic function doesn't care which monad it's using
 
-TODO this needs to be grounded in the example
-
-lets define `m_map` which knows about the monadic plumbing:
+lets define `m_map` which knows about the monadic plumbing. we can map, filter, reduce over monadic functions as if they did not have plumbing.
 
     def m_map(mf, mvals):
-        return map(lambda x: bind(x, mf), mvals)
+        return map(lambda x: bind(x, mf), mvals)  # uses whatever `bind` is in scope
 
     names = ["Irek", "John", "Alex", "Nick", "Fake"]
     m_names = map(unit, names)
-    m_loans = m_map(get_loan, m_names)
+    m_accounts = m_map(m_names, get_account)
+    m_balances = m_map(m_accounts, get_balance)
+    m_loans =    m_map(m_balances, get_loan)
 
     for name, m_loan in zip(names, m_loans):
         print "%s: %s" % (name, m_loan)
 
-`mmap` knows about bind, but it doesn't care which `bind` we're using. This version of `mmap` will work with ANY monadic function, whether we're using the maybe-monad, the error-monad, or any other monad. The specific behavior of the monad is abstracted behind the `bind` and `unit` functions. If we write the code such that a different `bind` is in scope, `mmap` still works.
+`m_map` knows about bind, but it doesn't care which `bind` we're using. This version of `mmap` will work with ANY monadic function, whether we're using the maybe-monad, the error-monad, or any other monad. The specific behavior of the monad is abstracted behind the `bind` and `unit` functions. If we write the code such that a different `bind` is in scope, `m_map` still works.
 
 
 ## cont-m

@@ -258,7 +258,7 @@ output:
     Alex: (250000, None)
     Fred: (None, 'No bank associated with name Fred')
 
-Side note: it took me about 45 minutes to build a working `get_loan`. I kept getting lost in the error code, whether i'm looking at a list of tuples or a list of values, and what do i do if only one of the values failed but the others are valid.
+Side note: it took me about 45 minutes to build a working `get_loan`. I kept getting lost in the error code, whether i'm looking at a list of tuples or a list of values, and what do i do if only one of the values failed but the others are valid. (Update: I don't even think it's correct, I think one error can fail all the others incorrectly, TODO)
 
 That damn plumbing, we took a nice 3 line list comprehension, and adding rigorous error handling turned everything crappy, confusing, and fragile. Its no longer obvious if our business logic is even correct, and if there are bugs, its going to be more difficult than necessary to fix. When we start to see excessive plubming, we should reach for monads.
 

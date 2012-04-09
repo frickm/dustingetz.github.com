@@ -16,3 +16,11 @@ there is exactly one language in the world which is expressive enough to fully i
 This is the beauty of Lisp: it allows me to express *previously unthinkable thoughts*. A dumb example: the combined error-seq-m, I attempted in the blog to implement the identical behavior without monads. I took two 30 minute whacks at it. Both are incorrect, I haven't been able to get it right yet! I was able to express this with monads, I needed the guy on stackoverflow to fix my combined-bind, but the combiner should be provided by the standard library along with all the individual monads. In Clojure I say "i want to combine seq-m and error-m, OK great, now here's my business logic" and bam, it works. I did something, easily, that I am barely capable of implementing without monads. Now imagine throwing in a state-monad which lets me track if a person is asking around at other banks for loans which impacts my decision to give him a loan, and now add some continuation-monad so I can implement these bank APIs asynchronously (to talk to a database or whatever) but still use them in synchronous fashion with list comprehensions and error codes. I can build this system in a few days in Clojure. I wonder how fast I could build a TMF? I wonder if the business logic in the app would be so clear from the code, because all complexity unrelated to the requirements is abstracted away, that we can just sort of build a one-off TMF app for each individual client's requirements buy sort of just assembling the pieces like legos in maybe a thousand lines of code. Fuck the reuqirements document, the code *is* the requirements document.
 
 This is the pipe dream, and maybe it is a pipe dream, but maybe we can get closer, which is why I care so much about functional programming.
+
+There's a final question you implied but didn't ask:
+
+> If monads are so powerful, why haven't they caught on in mainstream?
+
+This is an excellent question. I probably shouldn't because I am but a learner, but I'll speculate anyway.
+
+Monads can very rapidly blow up your stack.

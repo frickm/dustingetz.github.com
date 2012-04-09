@@ -65,6 +65,9 @@ output:
 
 I see this pattern all the time in business applications. I don't want to get into a debate about exceptions, I just want to demonstrate that exceptions are not the only way to factor out the error checking.
 
+http://mortoray.com/2012/04/02/everything-wrong-with-exceptions/
+http://mortoray.com/2012/03/08/the-necessity-of-exceptions/
+
 ## factor out the plumbing
 
 Lets take a good hard look at this. How can we factor out the error checking boilerplate in our code that uses the API? Lets factor out a function `bind`:

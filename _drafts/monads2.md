@@ -5,7 +5,7 @@ you've only seen error-monad, you haven't seen any of the more powerful ones, no
 
 As an example of the difficulty (and power) of combining monads, the blog post you read is flawed when i try to use error-monad within sequence-monad. I dare you to figure out the right implementation of `bind` where the monads are combined in this stackoverflow question: [combining-maybe-and-seq-monads-confused-at-the-output](http://stackoverflow.com/questions/10059163/combining-maybe-and-seq-monads-confused-at-the-output). This is not to say that I *need* to be able to fix this type of problem, it can be provided by a library, and is indeed provided by Clojure, Haskell, Scala.
 
-> I can show you really good examples in the DocWay Server of all kinds of bullshit code that is effectively thousands of lines that could be expressed in <10 using this sort of technique. Where I was a little confused was just in this: if it's that easy, why do people have such a hard time explaining it?
+> I can show you really good examples in the product of all kinds of bullshit code that is effectively thousands of lines that could be expressed in <10 using this sort of technique. Where I was a little confused was just in this: if it's that easy, why do people have such a hard time explaining it?
 
 if I may say so myself, the first half (non flawed) of this article is the single best monad tutorial on the Internet. If it sounds easy, it's because I distilled 30 other peope's blog post and reddit comments to their essence, and did a good job of writing about them and hand waving over the hard parts.
 

@@ -1,6 +1,6 @@
 # Dustin's awesome monad tutorial for humans, in Python
 
-*[ed: draft, need to add all the citations still. Bank account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)]*
+*[ed: this is a draft, and progressing pretty rapidly with dramatic changes each iteration. account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)]*
 
 > A monad is a monoid in the category of endofunctors, what's the problem?
 -- [James Iry](http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html)
@@ -8,6 +8,12 @@
 Right. This tutorial exists because Monads are easy, they're nothing but a design pattern. It shouldn't be necessary to understand category theory and type classes to use monads to improve our code without it being scary.
 
 Get ready to have your mind melted :D
+
+## TLDR: taste the power!
+
+To give you a feel for what monads are used for, I'm going to quickly build an example of complex monadic code, so you can see it. I'll explain from the beginning after I show you.
+
+
 
 ## rigorous error handling requires lots of 'plumbing'
 
@@ -258,7 +264,7 @@ output:
     Alex: (250000, None)
     Fred: (None, 'No bank associated with name Fred')
 
-Side note: it took me about 45 minutes to build a working `get_loan`. I kept getting lost in the error code, whether i'm looking at a list of tuples or a list of values, and what do i do if only one of the values failed but the others are valid. (Update: I don't even think it's correct, I think one error can fail all the others incorrectly, TODO)
+Side note: it took me about 45 minutes to build a working `get_loan`. I kept getting lost in the error code, whether i'm looking at a list of tuples or a list of values, and what do i do if only one of the values failed but the others are valid.
 
 That damn plumbing, we took a nice 3 line list comprehension, and adding rigorous error handling turned everything crappy, confusing, and fragile. Its no longer obvious if our business logic is even correct, and if there are bugs, its going to be more difficult than necessary to fix. When we start to see excessive plubming, we should reach for monads.
 
@@ -377,7 +383,7 @@ output:
     Alex: [[(250000, None)], None, [(250000, None)], None]
     Fred: [None, 'No bank associated with name Fred']
 
-i gotta say, when this worked, i got really excited :) (edit oops this is not quite right, see superfluous Nones, TODO)
+i gotta say, when this worked, i got really excited :)
 
 TODO fix up the example code to support all the other errors too.
 

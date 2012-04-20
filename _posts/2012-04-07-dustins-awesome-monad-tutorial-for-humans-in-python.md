@@ -3,12 +3,12 @@ layout: default
 title: Dustin's awesome monad tutorial for humans, in Python
 ---
 
-# # {{ page.title }}
+# {{ page.title }}
 
 *[ed: this is a draft, and progressing pretty rapidly with dramatic changes each iteration. account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)]*
 
 > A monad is a monoid in the category of endofunctors, what's the problem?
--- [James Iry](http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html)
+> -- [James Iry](http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html)
 
 Right. This tutorial exists because Monads are easy, they're nothing but a design pattern. It shouldn't be necessary to understand category theory and type classes to use monads to improve our code without it being scary.
 

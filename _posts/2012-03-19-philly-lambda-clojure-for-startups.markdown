@@ -1,11 +1,11 @@
 ---
-layout: default
+layout: post
 title: Philly Lambda presents Paul deGrandis on Clojure Powered Startups
 ---
 
 # {{ page.title }}
 
-Philly Lambda notes - 12 march 2012 
+Philly Lambda notes - 12 march 2012
 sponsored by Comcast Interactive Media; cimlife.com
 
 *ed: this is my personal take on Paul's lecture, the discussion has been organized, re-ordered, edited and clarified by me. My own opinions have inevitably leaked into this.*
@@ -21,7 +21,7 @@ Neal Ford talk at Conj last autumn - [master plan for enterprise domination (sli
 
 Neal Ford: CTOs are driven by fear, make decisions worried about making the wrong decisions. evaluate risk, unknowns, failure changes. true of large enterprises, true for startups. we make decisions for evaluation risk. in order to do this, need objective data, rapid adaptation - so i can instantly realize what is wrong, i need tools that allow me to see and switch real fast. spiral iteration. risk driven architectures. want to take the unknowns, how can we find more info about them, navigate the space as flexible as we possibly can. success is - winnning at the risks, beating the odds.
 
-Paul works with startups - small teams ~5. As a startup, Paul has the freedom to choose his stack, we only need to convince ourself it's the right choice, not everyone else. 
+Paul works with startups - small teams ~5. As a startup, Paul has the freedom to choose his stack, we only need to convince ourself it's the right choice, not everyone else.
 
 If clojure actually does manage risk better than other choices, this is our tagline: "Ill show you four cases to use clojure to manage risk better than you are now " - this is the killer argument for clojure adoption. To back this up, we need a "success protocol". examine people using clojure, what techniques can we use to get success? mine the success stories, distill them into one toolbox.
 
@@ -41,7 +41,7 @@ culture surrounding clojure and that community - don't need a huge team, need a 
 note both Paul and Kyle (mobile banking) are using Rails as their web layer. reasons cited: maturity of platform. (*ed: this surprised me, I'd like to know more about this, as I think clojure would be ideal for the enterprise vertical app i work on, including middle tier. I think there is a mismatch in approaches - the enterprise frontend is heavily data oriented with ajax services side by side with business state routines, as opposed to Tutorspree's frontend which is mostly presenting content as markup? Kyle's web layer, is it a frontend to his mobile banking infrastructure? I wonder if his web layer is only relevant to the internet-facing website, thus there's no complex backend logic, which makes Rails a better fit? this is purely speculative. Tutorspree's frontend certainly has core value, Paul talks of monitoring user actions like click locations in order to figure out learning styles and match up with tutors*)
 
 Q (Dustin): Clojure vs python. Why is clojure so much better?
-A (Paul): clojure as a community, toolset, language - forces you to be bottom up. build on the smallest nugget, building blocks, that you can build with. a bucket of legos. *ed: Paul implies this is something that python is less good at - i agree - needs more thought.* 
+A (Paul): clojure as a community, toolset, language - forces you to be bottom up. build on the smallest nugget, building blocks, that you can build with. a bucket of legos. *ed: Paul implies this is something that python is less good at - i agree - needs more thought.*
 
 clojure forces you to think problems in a bottom up way. build legos to solve his learning problem - in other langages, you have to actively try harder to do this. other startp collective intelligence problem. he did it in python, extremely funtional python - but he had to try real hard, python's inherent opinions and idioms don't naturally lead code towards a functional style.
 
@@ -58,14 +58,14 @@ Ben: clojure is not the only conceivable language to do these things: first clas
 Factor is a language that isn't a lisp, not a paren language, has a functional style. smalltalk had adanced interactive development environments.
 
 Clojure has interactive development which is really helpful for building legos. (*ed: here's a great example of interactive development - [video: Quick Intro to Live Programming with Overtone](http://vimeo.com/22798433)*). interactive development keeps you square in the "zone". clojure lets you hit the "zone" better than any other technology.
-  
+
 Clojure leverages 30 years of lispers doing interactive development. lego analogy. not going at the problem head on. lego building happens interactively.
 
-Dan M: languages rooted in lambda calculus are better at decomposing problems. 
+Dan M: languages rooted in lambda calculus are better at decomposing problems.
 
 Dustin asked if haskell can be like legos also - instead of building interactively by evaluating code as we edit it in emacs, we can build interactively by typechecking as we edit. Got negative reactions from the audience (notably Kyle and Dan). (*ed (dustin) - i think there is something to think about here, some of my best java code i can refactor & add features without running the code at all - the type checker tells me its correct, and it works the first time. It just takes discipline to decompse your java code into legos, it doesn't happen naturally like in haskell and clojure.*)
- 
-Dan Mead: "i dont write haskell for performance" 
+
+Dan Mead: "i dont write haskell for performance"
 Nick C: trying to get a lot of hands on haskell can be a problem.
 Dan Mead: haskell was very academicy things in our brain. SPJ (creator of haskell) says its supposed to have a trickle down effect to other languages. haskel - first language to study monads, they have trickled into clojure now. *ed: and scala, and perhaps even javascript: [jQuery is a Monad](http://importantshock.wordpress.com/2009/01/18/jquery-is-a-monad/)*
 

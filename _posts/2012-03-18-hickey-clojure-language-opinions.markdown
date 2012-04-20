@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: Clojure encourages immutable style, Common Lisp does not
 ---
 

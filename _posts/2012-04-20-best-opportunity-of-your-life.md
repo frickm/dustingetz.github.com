@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: "they are paying you to accept a much lower intellectual growth rate"
 ---
 

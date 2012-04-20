@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: Dustin's awesome monad tutorial for humans, in Python
 ---
 

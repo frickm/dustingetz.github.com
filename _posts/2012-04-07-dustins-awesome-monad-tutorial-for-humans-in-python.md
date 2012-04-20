@@ -1,4 +1,9 @@
-# Dustin's awesome monad tutorial for humans, in Python
+---
+layout: default
+title: Dustin's awesome monad tutorial for humans, in Python
+---
+
+# # {{ page.title }}
 
 *[ed: this is a draft, and progressing pretty rapidly with dramatic changes each iteration. account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)]*
 

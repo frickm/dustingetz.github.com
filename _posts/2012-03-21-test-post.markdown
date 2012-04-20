@@ -1,8 +1,0 @@
----
-layout: default
-title: Text Post
----
-
-# {{ page.title }}
-
-Test test test.

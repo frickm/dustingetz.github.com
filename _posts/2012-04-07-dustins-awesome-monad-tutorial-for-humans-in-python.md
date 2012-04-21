@@ -355,9 +355,12 @@ sequence monad:
 
 but, we actually want to combine their behaviors, lets build a composed monad!
 
+ed: this code is all wrong. everything below here is incorrect. will fix up soon.
+see <http://stackoverflow.com/questions/10059163/combining-maybe-and-seq-monads-confused-at-the-output> for how to do it correctly.
+
     # combined monad !!
-    def unit(x): return error_unit(seq_unit(x))
-    def bind(mval, mf): return error_bind(mval, lambda mval: seq_bind(mval, mf))
+    -- wrong -- def unit(x): return error_unit(seq_unit(x))
+    -- wrong -- def bind(mval, mf): return error_bind(mval, lambda mval: seq_bind(mval, mf))
 
 TODO: wow, monad composition is super cool! I kind of want to handwave over this, because we can abstract it, beginners don't need to understand monad combiners ("transformers"?), Clojure provides it as a standard library.
 

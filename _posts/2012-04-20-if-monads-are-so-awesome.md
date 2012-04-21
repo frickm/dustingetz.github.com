@@ -6,7 +6,7 @@ title: if monads are so awesome, why don't more people use them?
 
 # {{ page.title }}
 
-The below quotes are a response, from a friend, to my prior post on monads: (Dustin’s awesome monad tutorial for humans, in Python)[http://www.dustingetz.com/2012/04/07/dustins-awesome-monad-tutorial-for-humans-in-python.html]
+The below quotes are a response, from a friend, to my prior post on monads: [Dustin’s awesome monad tutorial for humans, in Python](http://www.dustingetz.com/2012/04/07/dustins-awesome-monad-tutorial-for-humans-in-python.html)
 
 > So a monad is just a function that takes another function and applies a behavior to it's processing?
 > Seemed interesting, but also almost too simple...

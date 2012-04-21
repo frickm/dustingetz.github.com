@@ -2,49 +2,26 @@
 layout: default
 ---
 
-      <div class="row-fluid">
-        <div class="span12" style="padding-top: 36px;">
-          {{ content }}
-        </div><!--/span-->
-      </div><!--/row-->
+      <div class="row" style="padding-top: 36px;">
+        <div class="span8 offset2">{{ content }}</div>
+      </div>
+      <div class="row">
+        <div class="span8 offset2"><hr></div>
+      </div>
+      <div class="row">
 
-      <hr>
+        <!-- more posts -->
 
-      <div class="row-fluid">
-
-        <div class="span6">
+        <div class="span8 offset2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-
-              <li class="nav-header">
-                recent posts
-              </li>
-
-              {% for post in site.posts limit:6 %}
-              <!--<li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>-->
+              <li class="nav-header">recent posts</li>
+              {% for post in site.posts limit:8 %}
               <li><a href="{{ post.url }}">{{ post.title }}</a></li>
               {% endfor %}
-
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-
-
-        <div class="span6">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-
-              <li class="nav-header">
-                about dustin
-              </li>
-
-              <li><a href="https://github.com/dustingetz">github.com/dustingetz</a></li>
-              <li><a href="http://careers.stackoverflow.com/dustingetz">resume</a></li>
-              <li><a href="https://twitter.com/dustingetz">@dustingetz</a></li>
-
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+          </div>
+        </div>
 
 
       </div>

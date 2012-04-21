@@ -1,0 +1,71 @@
+---
+layout: post
+title: java memory performance tuning, when rendering webapp markup
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+java memory performance tuning, when rendering webapp markup</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+A colleague and I were discussing an optimization which I felt was controversial. Our web application's middle-tier is somewhat page-centric as it predates AJAX getting popular, so most requests result in rendering a lot of HTML and javascript. We modified the rendering path to wire the response's output stream through all the rendering logic, removing any intermediate StringBuilders, thus avoiding buffer creation and reducing memory usage. We focused on the per-request memory usage, and did not target the cpu-usage, though removing intermediate StringBuilders does avoid unnecessary StringBuilder.toString's thus removing redundant string copies. We took informal traces in our profiler on a development workstation and observed a massive reduction of memory usage per request during response render, from 4.2mb to 85kb, a factor of 50 (!!!)&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+I outline some dramatic theories below, which so far are absolutely unverified and go against some popular mainstream beliefs which may or may not be founded. I may be wrong and the jury is certainly still out.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-weight:bold;">TLDR: despite the numbers, i suspect the optimization had negligible "real" impact</span>&nbsp;</p><p style=''><span style="font-weight:bold;">
+</span>&nbsp;</p><p style=''>
+GC is really complicated and without study, a magic "black box". GC performance is totally tied to both environment (os/hardware/ "real life" load), and JVM version, and JVM settings (both GC and other things like an automatically determined mode for workstation/server). So, GC metrics taken on a dev workstation may have less meaning than we think. Further, I theorize from reading and thinking real hard but not yet profiling, that we would observe a similar (identical?) memory-per-request reduction by tuning the GC to prefer more frequent and accordingly smaller cycles, such that there aren't a bunch of dead objects waiting for GC. Actually, its possible the new change is slower (!) in terms of cpu-time, because GC in large batches is intuitively faster than more frequent GC in smaller batches. I feel this theory is supported by the research below.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-weight:bold;">several quotes about JVM GC performance optimization</span>&nbsp;</p><p style=''><span style="font-weight:bold;">
+</span>&nbsp;</p><p style=''>
+2005, java 1.4: <a href="http://www.ibm.com/developerworks/java/library/j-jtp09275/index.html">Java theory and practice: Urban performance legends, revisited</a>&nbsp;</p><p style=''>
+"... confidently worded statements like "Garbage collection will never be as efficient as direct memory management." ... dynamic memory management is not as fast -- it's often considerably faster. The malloc/free approach deals with blocks of memory one at a time, whereas the <span style="background-color:rgb(255, 229, 0);">garbage collection approach tends to deal with memory management in large batches, yielding more opportunities for optimization</span> (at the cost of some loss in predictability)."&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="background-color:rgb(255, 255, 255);">same article</span>&nbsp;</p><p style=''>
+<span style="background-color:rgb(255, 255, 255);">"From this pseudocode, you can see why copying collectors enables such fast allocation --</span><span style="background-color:rgb(255, 229, 0);"> allocating a new object is nothing more than checking to see if there's enough space left in the heap and bumping a pointer if there is</span><span style="background-color:rgb(255, 255, 255);">. No searching free lists, best-fit, first-fit, lookaside lists -- just grab the first N bytes out of the heap and you're done." ... "But allocation is only half of memory management -- deallocation is the other half. It turns out that</span><span style="background-color:rgb(255, 229, 0);"> for most objects, the direct garbage collection cost is -- zero. This is because a copying collector does not need to visit or copy dead objects</span><span style="background-color:rgb(255, 255, 255);">, only live ones. So objects that become garbage shortly after allocation contribute no workload to the collection cycle."</span>&nbsp;</p><p style=''><span style="background-color:rgb(255, 255, 255);">
+[DJG this is a great justification for decomposing problems into stateless functions -- no interleaved dependencies = well defined &amp; short object lifecycles = GC does less work]</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[DJG: this next quote is historically interesting and i included it to make this post well rounded, but i think this represents the period of time where Java was significantly slower. hotspot has come a long way. the whole chapter seems off base compared to more recent articles.]&nbsp;</p><p style=''>
+circa 2000 (java 1.2?) <a href="http://oreilly.com/catalog/javapt/chapter/ch04.html">Java Performance Tuning (o'reilly book)</a>&nbsp;</p><p style=''>
+"Avoid creating objects in frequently used routines. Because these routines are called frequently, you will likely be creating objects frequently, and consequently adding heavily to the overall burden of object cycling. By rewriting such routines to avoid creating objects, possibly by passing in reusable objects as parameters, you can decrease object cycling."&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<a href="http://www.oracle.com/technetwork/java/gc-tuning-5-138395.html#1.1.Introduction%7Coutline">Tuning Garbage Collection with the 5.0 Java[tm] Virtual Machine</a> (sun/oracle docs)&nbsp;</p><p style=''>
+"In the J2SE platform version 1.4.2 there were four garbage collectors from which to choose but without an explicit choice by the user the serial garbage collector was always chosen. In version 5.0 the choice of the collector is based on the class of the machine on which the application is started."&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+java 1.4: <a href="http://www.ibm.com/developerworks/java/library/j-jtp01274/index.html">Java theory and practice: Garbage collection and performance&nbsp;</p><p style=''>
+</a>"The 1.0 and 1.1 JDKs used a mark-sweep collector, which did compaction on some -- but not all -- collections, meaning that the heap might be fragmented after a garbage collection. Accordingly, memory allocation costs in the 1.0 and 1.1 JVMs were comparable to that in C or C++, where the allocator uses heuristics such as "first-first" or "best-fit" to manage the free heap space. Deallocation costs were also high, since the mark-sweep collector had to sweep the entire heap at every collection. No wonder we were advised to go easy on the allocator. In HotSpot JVMs (Sun JDK 1.2 and later), things got a lot better -- the Sun JDKs moved to a generational collector. Because a copying collector is used for the young generation, the free space in the heap is always contiguous so that allocation of a new object from the heap can be done through a simple pointer addition"&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[same article]&nbsp;</p><p style=''>
+"The JIT compiler can perform additional optimizations that can reduce the cost of object allocation to zero. Consider the code in Listing 2, where the getPosition() method creates a temporary object to hold the coordinates of a point, and the calling method uses the Point object briefly and then discards it. The JIT will likely inline the call to getPosition() and, using a technique called escape analysis, can recognize that no reference to the Point object leaves the doSomething() method. Knowing this, the JIT can then allocate the object on the stack instead of the heap or, even better, optimize the allocation away completely and simply hoist the fields of the Point into registers. While the current Sun JVMs do not yet perform this optimization, future JVMs probably will."&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[first article again, 2005, java 1.4, but discussing features that are now in late versions of 1.6]&nbsp;</p><p style=''>
+<a href="http://www.ibm.com/developerworks/java/library/j-jtp09275/index.html">Java theory and practice: Urban performance legends, revisited</a>&nbsp;</p><p style=''>
+"JVMs [DJG: certain versions of 1.6] can use a technique called escape analysis, by which they can tell that certain objects remain confined to a single thread for their entire lifetime, and that lifetime is bounded by the lifetime of a given stack frame. Such objects can be safely allocated on the stack instead of the heap. "&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+another take on escape analysis: <a href="http://blog.juma.me.uk/2008/12/17/objects-with-no-allocation-overhead/">Objects with no allocation overhead</a>&nbsp;</p><p style=''>
+"So, what about that title? Escape analysis was introduced during Java 6, but the information gathered was only used for lock elision. However, this information can also be used for other interesting optimisations like scalar replacement and stack allocation. There have been doubts about the benefits of stack allocation (discussed in the comments) so the focus has been on scalar replacement so that the object is never in memory. At least that’s the theory" ... "As we can see, escape analysis has a tremendous effect and the method finishes in 11% of the time taken with it disabled. However, the version with no allocation is still substantially faster"&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-weight:bold;">more on StringBuilder.toString and String.format</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+last we debated String performance, we looked at the impl of String.format, and observed an unnecessary copy: String.format has to loop twice, once to render individual chunks into a StringBuilder, and once more in StringBuilder.toString to assemble the chunks into the final buffer. The first loop is <a href="http://en.wikipedia.org/wiki/Essential_complexity">essential complexity</a> and equivalent to manually unrolling the loop into an explicit StringBuilder, right? and as of tonight I think we could remove the StringBuilder.toString: defer the work until we have the final outputstream available (like the Conditions visitor), thus rendering string.format right into the final stream, skipping all intermediate toStrings. I'm not sure we'd ever care enough to bother, but I might throw together an implementation right now to make sure I'm not missing something. &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Its worth explicitly stating that the traditional reason to use StringBuilder is to avoid concatenating strings. I think this is not due to intermediate object creation, but its due to effectively n-squared performance, because each individual concatenation is an O(N) copy. String.format doesn't concatenate, it has equivalent complexity to StringBuilder, which means that my conclusions might not be as out of line as one might initially think.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+if we had a business justification to touch our core rendering code, i'd rather get rid of all state altogether and decompose the rendering into a tree of chunks then traverse the tree to stream the chunks. This is essentially equivalent algorithmic complexity to a StringBuilder (which maintains an internal list of chunks), but uses return values instead of mutating state.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+cost is:&nbsp;</p><p style=''>
+object creation and deallocation, which according to the above quotes is mostly free&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+benefit is:&nbsp;</p><p style=''>
+simpler code with explicit dependencies and no interlocked state&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+finally, if we're truly worried about performance here and had legit traces to back it up, the best answer is to stop rendering code, instead render json data with all the "code" cached on the client -- which would drastically reduce average request size (bandwidth, memory, and cycles).&nbsp;</p>

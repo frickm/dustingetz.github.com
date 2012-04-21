@@ -1,0 +1,33 @@
+---
+layout: post
+title: the cost of accidental complexity: a dumb example
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+the cost of accidental complexity: a dumb example</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">so here's a dumb example of accidental complexity causing "implementation" bugs as opposed to bugs in my actual mental model of the solution. </span>&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-family:monospace;">Map&lt;String, OrmObject&gt; events = (obj.isNew()</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:monospace;">
+    ? Collections.&lt;String, OrmObject&gt;emptyMap()</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:monospace;">
+    : queryBlahBlah(obj.getId(), database));</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+all orm objects have the isNew flag, and if they're new, they don't have an ID because the db generates the id on first save. which leaves us vulnerable to things like NPEs. it's a design flaw, if we had the middle tier generate a guid for the ID, getId() is always well-defined, and we don't have to branch here. i wish i had recognized this months ago, this is the first time i realized it, even after being bit by this exact bug about a hundred times this year.</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+these extra, accidental branches, here there is only one but in some places the possible states multiply. thus complexity grows superlinearly[2] (probably order of n^2, n is possible states in a module) </span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+none of this has anything directly to do with FP, its just design skills. clearly i still havent found the magic spot for communicating this. a guy from the conshohocken ruby meetup calls it "confident code"[1], which i like. </span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="https://lh4.googleusercontent.com/-Cs-muD17ato/Tk6b1Rb9MwI/AAAAAAAAAeY/MTDO67H4r1c/s912/narrative-code-avdi-grimm.png">cool screenshot</a></span><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">.</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+[2] superlinear/quadratic complexity: </span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://news.ycombinator.com/item?id=3037496">http://news.ycombinator.com/item?id=3037496</a></span></span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+[1] </span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://www.dustingetz.com/forget-functional-programing-lets-do-narrative-programming">http://www.dustingetz.com/forget-functional-programing-lets-do-narrative-programming</a></span>&nbsp;</p>

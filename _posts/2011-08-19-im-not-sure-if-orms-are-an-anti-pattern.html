@@ -1,0 +1,32 @@
+---
+layout: post
+title: i'm not sure if ORMs are an anti-pattern
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+i'm not sure if ORMs are an anti-pattern</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">i like to deeply understand every abstraction i'm using, and I see a lot of unanswered questions about ORMs.</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- is orm an anti-pattern? </span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://seldo.com/weblog/2011/06/15/orm_is_an_antipattern">http://seldo.com/weblog/2011/06/15/orm_is_an_antipattern</a></span></span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- if we want object abstractions on our data, why aren't we using an object database? (relational constraints, joins, transactions)</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- if we need joins or transactions, is thinking in terms of objects harmful? what would a data-oriented (rather than object oriented) system look like? </span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://gamesfromwithin.com/data-oriented-design">http://gamesfromwithin.com/data-oriented-design</a></span></span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- besides object-oriented and data-oriented, are there any other ways to think about our data? what would it look like if the object-relational mapping layer were specialized on a per-object basis?</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- why exactly is pseudo-sql or a conditions API really necessary</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- what should a conditions api do or not do, especially with respect to mutating queries</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- should a conditions api handle paging?</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- case study of existing conditions apis, good ones and bad ones, what are the design tradeoffs, what are some design mistakes -- </span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://engineering.foursquare.com/2011/01/21/rogue-a-type-safe-scala-dsl-for-querying-mongodb/">http://engineering.foursquare.com/2011/01/21/rogue-a-type-safe-scala-dsl-for-querying-mongodb/</a></span></span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+- its convenient to have an object representation of our conditions so we can traverse a tree to mutate them, but is this a good idea? if we thought through the problems, couldn't we pivot the control flow such that we can functionally decompose the condition creation such that we don't need to mutate state?</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+i think these are hard questions, and i don't have the answers, but a group study would be cool. but there is significant homework to be done first. i'd rather somebody more qualified steps up, but if not and there is interest i may be willing to lead the discussion.</span>&nbsp;</p>

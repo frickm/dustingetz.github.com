@@ -1,0 +1,76 @@
+---
+layout: post
+title: wrong code should look wrong
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+wrong code should look wrong</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+we're in the final week before release, and i am writing a LOT of code. Tons and tons of code, like I'm in the friggin matrix right now. I just banged out this snippet in about 30 seconds:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-family:courier new,monospace;">ormcontext.getConnection().getTransaction().begin();</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+try</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+{</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+for (OrmObject existing : existingResources) {</span>&nbsp;</p><p style='margin-left:66px'><span style="font-family:courier new,monospace;">
+existing.delete(ormcontext);</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+}</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+newObject.save(ormcontext);</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+ormcontext.getConnection().getTransaction().commit();</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+}</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+finally </span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+{</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+ormcontext.getConnection().getTransaction().close();</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+}</span>&nbsp;</p><p style=''><span style="font-family:courier new,monospace;">
+</span>&nbsp;</p><p style=''>
+can you spot the bug?&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+of course not, neither did I. Luckily if `<span style="font-family:courier new,monospace;">existing</span>` is non-empty, code deadlocks on itself the second time through, so I noticed the problem before test.&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-family:courier new,monospace;">public Transaction getTransaction()</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+{</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+return new Transaction(this);</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+}</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Now the bug obvious -- we need to save the result of `<span style="font-family:courier new,monospace;">getTransaction`</span>, because that's our only reference to commit and release the transaction. I fixed the platform[1] to look like this:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-family:courier new,monospace;">Transaction transaction = ormcontext.getConnection().<span style="font-family:courier new,monospace;background-color:rgb(255, 229, 0);">acquireTransaction</span>(); </span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+try</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+{</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+for (OrmObject existing : existingResources) {</span>&nbsp;</p><p style='margin-left:66px'><span style="font-family:courier new,monospace;">
+existing.delete(appContext);</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+}</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+newObject.save(appContext);</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+transaction.commit();</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+}</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+finally </span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+{</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:courier new,monospace;">
+transaction.<span style="font-family:courier new,monospace;background-color:rgb(255, 229, 0);">release</span>();</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:courier new,monospace;">
+}</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Even if we forgot to save a reference to the transaction while writing this, we'd get to the `commit` or `finally`, type out `<span style="font-family:courier new,monospace;">acquireTransaction().release()`</span>, and instantly hear alarm bells. Even without sufficient coffee. This is the value of articulate names.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+- 'get' means, O(1) lookup. cache.get(key). methods named get can be called inline, you don't ever (shouldn't ever?) need to save a reference to the return value.&nbsp;</p><p style=''>
+- 'read' is for IO operations. file.readLine, socket.readBytes&nbsp;</p><p style=''>
+- 'query' is a special case of read, because database IO is typically slow enough to care about. it may be worth some accidental complexity at the call site to avoid querys.&nbsp;</p><p style=''>
+- 'fetch' means, hey i might have to go find it and bring it back, i won't be but a moment, wait here and i'll be right back with what you want. queryResults.fetchNextRow(). the rare O(n) lookup, like finding an ancestor container in a UI widget hierarchy.&nbsp;</p><p style=''>
+- 'build' means, im going to construct an object and initialize it's state, you should save a reference to it so you don't have to build it again. buildSearchCondition(type, attr, operator, value) is a convenience factory for search conditions.&nbsp;</p><p style=''>
+- 'acquire' resources, 'release' when you're done.&nbsp;</p><p style=''>
+- 'try' to do something that may or may not return a value, so make sure you check for null. tryCombineConditions(conditionList, AND) -- if list has &gt;=2 elements build a CompositeCondition, if one element return that condition unchanged, if zero elements return null.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+articluate names make "what the code is doing" more obvious. you won't dangle resources, you won't accidentally query the database, you won't forget to check null, the performance characteristics of your code is explicit. Tightly written code keeps your app snappy, because it forces the code to reflect the developer's mental model of the solution, which makes the bottlenecks obvious. it also forces you to have methods with a well defined purpose -- when I find myself struggling to name my methods, or struggling to explain my code to a peer, usually it means I need to rethink my abstraction of the problem.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[1] there is some disagreement as to what precisely the proper nomenclanture is (create, build?), and maybe the transaction model needs to be changed, but really the only thing that matters is that it is harder for myself and others to make the same mistake I just made, twice. Learning from your mistakes and preventing them from happening again is, I think, one hallmark of an expert software engineer[2].&nbsp;</p><p style=''>
+[2] nostrademons on HN: <a href="http://www.dustingetz.com/how-to-become-an-expert-swegr">http://www.dustingetz.com/how-to-become-an-expert-swegr</a>&nbsp;</p>

@@ -1,0 +1,67 @@
+---
+layout: post
+title: Ext: understanding dynamic component state, properties and methods
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+Ext: understanding dynamic component state, properties and methods</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+I've seen some confusion in our codebase about when you can use Ext properties and when you should use a method. One example is dynamically disabling a field. One might try to accomplish this by manipulating the disabled property.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+TLDR: If you want to do something that impacts an immediate change, you must invoke a method. Don't manipulate private, undocumented, or readonly properties.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-weight:bold;">Ext.Component implementation details</span>&nbsp;</p><p style=''>
+A good understanding of the difference between an Ext.Component's configured values, properties, and methods will help us understand why application logic usually shouldn't manipulate properties. Here's <a href="http://dev.sencha.com/deploy/ext-3.3.1/docs/source/Component.html#cls-Ext.Component">Ext.Component's constructor</a>:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+Ext.Component = function(config){&nbsp;</p><p style='margin-left:22px'>
+    config = config || {};&nbsp;</p><p style='margin-left:22px'>
+    /* snip */&nbsp;</p><p style='margin-left:22px'>
+    this.initialConfig = config;&nbsp;</p><p style='margin-left:22px'>
+    <span style="background-color:rgb(255, 229, 0);">Ext.apply(this, config);</span>&nbsp;</p><p style='margin-left:22px'>
+    Ext.ComponentMgr.register(this);&nbsp;</p><p style='margin-left:22px'>
+    Ext.Component.superclass.constructor.call(this);&nbsp;</p><p style='margin-left:22px'>
+    /* snip */&nbsp;</p><p style='margin-left:22px'>
+    this.initComponent();&nbsp;</p><p style='margin-left:22px'>
+};&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+You can see how config objects are applied to a component instance -- config objects exist to specify exactly enough information to construct a specific type of Ext.Component, and set its initial state. Component state logic, like validation styles in Ext.form.TextField, will then inspect this.disabled to see the current state, which is initialized from the config object. &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Thus, to dynamically change the disabled state of a component, you could directly manipulate the component's disabled property. The trouble is, the field doesn't know that it should immediately revalidate, nor have we given it an opportunity to execute code, so the invalid css (red sawtooth) will not be applied until the next time the component naturally validates, typically when you focus the field or submit the form. So you have to manually call validate() to get the invalid css (red sawthooth) to apply immediately.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+The official way to change the disabled state is to invoke <a href="http://dev.sencha.com/deploy/ext-3.3.1/docs/source/Component.html#method-Ext.Component-disable">disable()</a>:&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+    /**&nbsp;</p><p style=''>
+     * Disable this component and fire the 'disable' event.&nbsp;</p><p style=''>
+     * @return {Ext.Component} this&nbsp;</p><p style=''>
+     */&nbsp;</p><p style=''>
+    disable : function(/* private */ silent){&nbsp;</p><p style=''>
+        if(this.rendered){&nbsp;</p><p style=''>
+            this.onDisable();&nbsp;</p><p style=''>
+        }&nbsp;</p><p style=''>
+        /* snip */&nbsp;</p><p style=''>
+    },&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+    // private&nbsp;</p><p style=''>
+    onDisable : function(){&nbsp;</p><p style=''>
+        this.getActionEl().addClass(this.disabledClass);&nbsp;</p><p style=''>
+        this.el.dom.disabled = true;&nbsp;</p><p style=''>
+    }&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+and it is obvious that the component will immediately add the disabled-style to the DOM element before returning control to the caller.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-weight:bold;">This lesson applies in other places too</span>&nbsp;</p><p style=''>
+hiding a component through the hidden property, instead of methods show(), hide() and setHidden()&nbsp;</p><p style=''>
+changing validation rules though the allowBlank property instead of configuring a validator function&nbsp;</p><p style=''>
+dynamically adding components directly to a container's items, instead of using container.add()&nbsp;</p><p style=''>
+&nbsp;</p>

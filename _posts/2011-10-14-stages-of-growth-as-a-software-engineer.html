@@ -1,0 +1,95 @@
+---
+layout: post
+title: stages of growth as a software engineer
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+stages of growth as a software engineer</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+(Excerpts from an email thread. Needs revision to be a real blog post, ping me if you're interested in this stuff.)&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+John D Cook wrote[1]:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">...difficulty of writing software increases with size.  Many people who wrote 100-line programs in college imagine that they could write 1,000-line programs if they worked at it 10 times longer.  Or even worse, they imagine they could write 10,000-line programs if they worked 100 times longer. It doesn’t work that way.  Most people who can write a 100-line program could never finish a 10,000-line program no matter how long they worked on it.  They would simply drown in complexity.  One of the marks of a professional programmer is knowing how to organize software so that the complexity remains manageable as the size increases.  Even among professionals there are large differences in ability.  The programmers who can effectively manage 100,000-line projects are in a different league than those who can manage 10,000-line projects.</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+for a bright college kid who can nail a 100-line algorithm, this is the stuff i was thinking about when i was a cocky 21 years old who didn't understand the value of experience. tactical stuff like "while with break is an antipattern" to recognizing that branches/indentation is a code smell, but not really understanding why. code complete, jeff atwood and joel spolskey and a stackoverflow compulsion fit the bill. Paul Graham to get their minds ticking about non-tactical or out-of-band stuff, and Dale Carnegie[2] for people skills which is ridiculously important. start reading HN.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+then you get to the 100k LOC class of engineer, which is probably me if i strut out my chest and stand on tip-toes, and i really haven't found any books that were downright awesome, though i've found a handful of blogs from HN that are just incredible, but funnily enough they are all functional coders, even though that's not what they always write about. i've found reading research papers from specific names enlightening,... Fred Brooks (mythical man month has some good papers, one awesome paper, and a lot of weak ones), Martin Odersky (scala), and the equivalent of "Effective C++" in your language of choice. spend an hour a day on hackernews. All the books I've read that seem to apply to 100k-engineers seem to have lots of hand-wavey stuff and validate things i already know but never seem to deepen my understanding. could just be me.  though Coders at Work (interviews with the greats) was cool because there are little quotes from like Knuth who says something in one sentence that takes me a paragraph, that's cool.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+the 10MM LOC engineer, of course, doesn't exist because those projects don't ship. If this engineer did exist, he'd write the "10MM LOC" in  50k lines of lisp, but they don't seem to have time to write books, or at least i haven't found any yet. higher order perl might be one such, its in my amazon cart, thanks for the tip!&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+awesome blogs for 100k-engineers trying to get to 10MM, i read every word they wrote&nbsp;</p><p style=''>
+<a href="http://www.johndcook.com/blog">http://www.johndcook.com/blog</a>&nbsp;</p><p style=''>
+<a href="http://prog21.dadgum.com/">http://prog21.dadgum.com/</a>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+since its on topic:&nbsp;</p><p style=''>
+Kyle's book list <a href="http://asymmetrical-view.com/2009/11/30/influenced-by-books.html">http://asymmetrical-view.com/2009/11/30/influenced-by-books.html</a>&nbsp;</p><p style=''>
+Joel's book list <a href="http://www.joelonsoftware.com/articles/FogCreekMBACurriculum.html">http://www.joelonsoftware.com/articles/FogCreekMBACurriculum.html</a>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[1] <a href="http://www.johndcook.com/blog/2008/09/19/writes-large-correct-programs/">http://www.johndcook.com/blog/2008/09/19/writes-large-correct-programs/</a>&nbsp;</p><p style=''>
+[2] &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Kyle:&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+I think it's great that you say you think indentation is a code smell.&nbsp;</p><p style=''>
+ I would love to talk to you about some thoughts along those lines --&nbsp;</p><p style=''>
+it's obviously language dependent, but I think that the actual shape&nbsp;</p><p style=''>
+of the indentation can be a sign of what code is doing.  Indentation&nbsp;</p><p style=''>
+that looks like the teeth on a saw blade - in and out at a fairly&nbsp;</p><p style=''>
+regular depth, is a sign of something.  So is code that looks like&nbsp;</p><p style=''>
+'half a christmass tree' that just keeps getting indented further and&nbsp;</p><p style=''>
+further with 'else' clauses that attempt to balance things out.  I&nbsp;</p><p style=''>
+have become a fan of straight lines (analogy is no static) with clear&nbsp;</p><p style=''>
+signals (like a spike in a radio signal) because it often is a sign of&nbsp;</p><p style=''>
+things like error checking with early exits (looks like low noise) and&nbsp;</p><p style=''>
+then a strong signal (where quick and deep indentation is often a sign&nbsp;</p><p style=''>
+of using a managed resource, which IMO is a safe pattern).  Lots of&nbsp;</p><p style=''>
+ideas I'd love more help in articulating in this area.  Managing the&nbsp;</p><p style=''>
+cognitive load a person has to handle as they're reading code is&nbsp;</p><p style=''>
+definitely a hard thing to do when authoring code.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+&gt; though Coders at Work (interviews with&nbsp;</p><p style=''>
+&gt; the greats) was cool because there are little quotes from like Knuth who&nbsp;</p><p style=''>
+&gt; says something in one sentence that takes me a paragraph, that's cool.&nbsp;</p><p style=''>
+&gt; the 10MM LOC engineer, of course, doesn't exist because those projects don't&nbsp;</p><p style=''>
+&gt; ship. If this engineer did exist, he'd write the "10MM LOC" in  50k lines of&nbsp;</p><p style=''>
+&gt; lisp, but they don't seem to have time to write books, or at least i haven't&nbsp;</p><p style=''>
+&gt; found any yet. higher order perl might be one such, its in my amazon cart,&nbsp;</p><p style=''>
+&gt; thanks for the tip!&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+I don't know.  Linux is a multi million, or at least multi 100k LOC)&nbsp;</p><p style=''>
+system.  To manage that much complexity, Linus had to become a&nbsp;</p><p style=''>
+manager.  He had to delegate.  There is only so much complexity a&nbsp;</p><p style=''>
+single person can hold in their head.  We are finite beings. So the&nbsp;</p><p style=''>
+larger the complexity you attempt to wrangle, the more it ends up&nbsp;</p><p style=''>
+being an exercise in dealing with human nature and interactions -&nbsp;</p><p style=''>
+management and people skills.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Dustin:&nbsp;</p><p style=''>
+as a superficial example of popular stuff that doesn't deepen understanding: <a href="http://news.ycombinator.com/item?id=3025137">Art of writing unmaintainable code</a>, which is +182 on HN. "write reusable code! don't use hungarian notation! keep your methods small! refactor! comment well and assert!". that's great and all, but the real problems we face are not tactical so much as building poor abstractions. in my last 4 years of voraciously devouring this stuff, i've never stumbled across an explanation or even acknowledgement of why we should prefer composition to inheritance, until i deliberately searched it out and discovered the term "implementation inheritance" (antipattern). i only figured it out myself after solving a nasty problem in may at work and being totally disgusted with the way it turned out, and searching for a better way.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+on the flip side, here's an awesome article about a <a href="https://plus.google.com/116635422485042503270/posts/bCB4bJYQXMr">top-notch finance firm trying out java and how it failed</a>, then the same team tried ocaml and it worked: &nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">"But somehow when coding in Java we built up a nest of classes that left people scratching their heads when they wanted to understand just what piece of code was actually being invoked when a given method was called. Code that made heavy use of inheritance was particularly difficult to think about, in part because of the way that inheritance ducks under abstraction boundaries"</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+that's deep, and its rare that i see it acknowledged as even an improvement area. the article is the best i can remember seeing, but even then its still hand-waving, the examples are small and the evidence is anecdotal. i don't know if a non-believer would be swayed. probably because it's not a problem in the beginning of a project, its only a problem when the abstractions become so layered that it's too late, and the problem is so, uh, "mis-abstracted" that its too hard to think of a different way to abstract it. that's why, i think, people latch onto the superficial, tactical-level things, it's much easier to talk about convincingly. Talking about different ways to abstract a hard problem is challenging and requires such a deep explanation that every time I attempt to talk about it, i end up handwaving too. its hard!&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+awesome point about Linux -- speculating, of course -- i wonder what the aggregated engineering cost was? it's distributed over tens of investors, and Linus has dictator power to say "nope, your changeset sucks". "As of January 4, 2011, using current LOC and wage numbers with David A. Wheeler's calculations it would cost approximately 3 billion USD to redevelop the Linux kernel" [3]. I guess a defense contractor could afford it, but could the project survive re-orgs and presidential elections? could we even get to where it is now without the frequent production releases and pivoting based on real-life needs? for better or worse, the customers that can afford this do waterfall. i speculate that its too hard. it makes sense what you say about it becomes an exercise in leadership and management, but that's interesting too because organizational complexity scales n-squared with team size, or maybe at best n-log-n for pyramidal team structure, which is of course the same complexity as due to increasing number of interacting software components/states.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+For the "if" stuff -- yeah, what you say about sawtooth structure makes tons of sense. imo, one possible underlying reason is that lots of branches means there is lots of mutable state. so excessive ifs is a flag to look for accidental complexity in the form of non-essential state. this is my present understanding, though i only arrived at this more fundamental understanding recently. fwiw, i don't think an academic/deep understanding of these things are necessary to write great code, or even to have a successful project. however critical we are of modern software practices, the economics clearly show us that the industry is creating massive value.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[3] <a href="http://en.wikipedia.org/wiki/Linux_kernel">http://en.wikipedia.org/wiki/Linux_kernel</a>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+it's also possible that 10MM-engineering doesn't have books because 10MM-engineering isn't solved. it might even be a useless metaphor, because take a google search -- counting from the browser client all the way down to the networking hardware, i'm sure we're way over 10MM loc. successful abstractions at work.&nbsp;</p>

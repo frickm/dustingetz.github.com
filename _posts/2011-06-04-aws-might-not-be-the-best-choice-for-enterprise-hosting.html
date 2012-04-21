@@ -1,0 +1,37 @@
+---
+layout: post
+title: AWS might not be the best choice for enterprise hosting
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+<span style="display:none;color:rgb(0, 0, 0);font-family:arial, sans-serif;">AWS might not be the best choice for enterprise hosting</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+From Reddit's postmortem[1] of the 2011 AWS outage:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">Shortly after noticing the EBS issues this morning, our database replication took a severe turn for the worse. Data which had been committed to the slaves was not committed to the masters. In a normal replication scenario, this should never, ever happen. The master commits the data, then tells the slave it is safe to commit the same data.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">We are still investigating as to why replication failed. All we know is that it definitely broke when the EBS disks on the masters started having issues. We could make some speculation about the disks possibly losing writes when Postgres flushed commits to disk, but we have no proof to determine what happened.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style=''>
+EC2 instance storage doesn't persist across reboots&nbsp;</p><p style=''>
+EC2 instances are, by design, slightly unreliable&nbsp;</p><p style=''>
+thus you must use EBS for persistant storage to protect against data loss when an instance goes down or reboots&nbsp;</p><p style=''>
+EBS is a complicated product, not nearly as simple as a NAS&nbsp;</p><p style=''>
+as such when EBS starts misbehaving, it basically looks to our application like a hardware malfunction&nbsp;</p><p style=''>
+our existing software is not written to survive hardware malfunctions&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+some documented EBS malfunctions range from disk read time increasing by a factor of 100 to doing a disk write and EBS not actually writing it, which violates fundamental assumptions of like every piece of software written ever.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+I &lt;3 AWS, I hope we can understand all these issues and decide they're worth it (e.g. because clients can accept their app becoming unavailable for a day, which is probably negotiable). But maybe the sexy APIs and scripted environment deployment aren't worth the cost of engineering around reliability issues.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[1] <span style="color:rgb(0, 0, 204);"><a href="http://blog.reddit.com/2011/03/why-reddit-was-down-for-6-of-last-24.html">http://blog.reddit.com/2011/03/why-reddit-was-down-for-6-of-last-24.html</a></span>&nbsp;</p>

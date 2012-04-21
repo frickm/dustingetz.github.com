@@ -1,0 +1,27 @@
+---
+layout: post
+title: fascinating cs explanation of why "java generics are not covariant"
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+fascinating cs explanation of why "java generics are not covariant"</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-family:arial;">which, in human, is why the following is a compile error:</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span><span style="color:rgb(0, 0, 0);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">interface B </span><span style="color:rgb(0, 0, 139);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">extends</span><span style="color:rgb(0, 0, 0);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;"> A {}</span>&nbsp;</p><p style=''><span style="color:rgb(0, 0, 0);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">
+</span><span style="color:rgb(0, 0, 139);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">public</span><span style="color:rgb(0, 0, 0);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;"> </span><span style="color:rgb(43, 145, 175);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">List</span><span style="color:rgb(0, 0, 0);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">&lt;B&gt; getList();</span>&nbsp;</p><p style=''><span style="color:rgb(0, 0, 0);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">
+</span><span style="color:rgb(43, 145, 175);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">List</span><span style="color:rgb(0, 0, 0);background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">&lt;A&gt; = getList(); </span><span style="color:gray;background-color:transparent;font-family:Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;">// Type mismatch: cannot convert from List&lt;B&gt; to List&lt;A&gt;</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+(what i just stumbled on) <a href="http://stackoverflow.com/questions/7690684/java-cast-from-listb-to-lista-where-b-extends-a">http://stackoverflow.com/questions/7690684/java-cast-from-listb-to-lista-where-b-extends-a</a></span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>(hardcore explanation) <a href="http://stackoverflow.com/questions/663254/scala-covariance-contravariance-question/674090#674090">http://stackoverflow.com/questions/663254/scala-covariance-contravariance-question/674090#674090</a>&nbsp;</p>

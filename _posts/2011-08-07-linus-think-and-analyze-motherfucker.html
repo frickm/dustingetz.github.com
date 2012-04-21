@@ -1,0 +1,122 @@
+---
+layout: post
+title: linus: think and analyze, motherfucker*
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+linus: think and analyze, motherfucker*</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+TLDR: "There really are only two acceptable models of development: 'think and analyze' or 'years and years of testing on thousands of machines'"&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+*just kidding, he didn't *quite* say that ;)&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Spoken with typical justified arrogance[1]:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+From: Linus Torvalds &nbsp;</p><p style='margin-left:22px'>
+Date: 2011-04-13 20:54:55 GMT&nbsp;</p><p style='margin-left:22px'>
+On Wed, Apr 13, 2011 at 1:48 PM, Yinghai Lu &lt;yinghai &lt;at&gt; <a href="http://kernel.org">kernel.org</a>&gt; wrote:&nbsp;</p><p style='margin-left:22px'>
+&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt; can you try following change ? it will push gart to 0x80000000&nbsp;</p><p style='margin-left:22px'>
+&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt; diff --git a/arch/x86/kernel/aperture_64.c b/arch/x86/kernel/aperture_64.c&nbsp;</p><p style='margin-left:22px'>
+&gt; index 86d1ad4..3b6a9d5 100644&nbsp;</p><p style='margin-left:22px'>
+&gt; --- a/arch/x86/kernel/aperture_64.c&nbsp;</p><p style='margin-left:22px'>
+&gt; +++ b/arch/x86/kernel/aperture_64.c&nbsp;</p><p style='margin-left:22px'>
+&gt; @@ -83,7 +83,7 @@ static u32 __init allocate_aperture(void)&nbsp;</p><p style='margin-left:22px'>
+&gt;         * so don't use 512M below as gart iommu, leave the space for kernel&nbsp;</p><p style='margin-left:22px'>
+&gt;         * code for safe&nbsp;</p><p style='margin-left:22px'>
+&gt;         */&nbsp;</p><p style='margin-left:22px'>
+&gt; -       addr = memblock_find_in_range(0, 1ULL&lt;&lt;32, aper_size, 512ULL&lt;&lt;20);&nbsp;</p><p style='margin-left:22px'>
+&gt; +       addr = memblock_find_in_range(0, 1ULL&lt;&lt;32, aper_size, 512ULL&lt;&lt;21);&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+What are all the magic numbers, and why would 0x80000000 be special?&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Why don't we write code that just works?&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Or absent a "just works" set of patches, why don't we revert to code that has years of testing?&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+This kind of "I broke things, so now I will jiggle things randomly until they unbreak" is not acceptable.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Either explain why that fixes a real BUG (and why the magic constants need to be what they are), or just revert the patch that caused the problem, and go back to the allocation patters that have years of experience.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Guys, we've had this discussion before, in PCI allocation. We don't do this. We tried switching the PCI region allocations to top-down, and IT WAS A FAILURE. We reverted it to what we had years of testing with.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Don't just make random changes. There really are only two acceptable models of development: "think and analyze" or "years and years of testing on thousands of machines". Those two really do work.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+                   Linus&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+From: Linus Torvalds &lt;torvalds &lt;at&gt; <a href="http://linux-foundation.org">linux-foundation.org</a>&gt;&nbsp;</p><p style='margin-left:22px'>
+On Wed, Apr 13, 2011 at 2:23 PM, Yinghai Lu &lt;yinghai &lt;at&gt; <a href="http://kernel.org">kernel.org</a>&gt; wrote:&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt; What are all the magic numbers, and why would 0x80000000 be special?&nbsp;</p><p style='margin-left:22px'>
+&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt; that is the old value when kernel was doing bottom-up bootmem allocation.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+I understand, BUT THAT IS STILL A TOTALLY MAGIC NUMBER!&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+It makes it come out the same ON THAT ONE MACHINE.  So no, it's not "the old value". It's a random value that gets the old value in one specific case.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt; Why don't we write code that just works?&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt; Or absent a "just works" set of patches, why don't we revert to code that has years of testing?&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt; This kind of "I broke things, so now I will jiggle things randomly until they unbreak" is not acceptable.&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt; Either explain why that fixes a real BUG (and why the magic constants need to be what they are), or just revert the patch that caused the problem, and go back to the allocation patters that have years of experience.&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt; Guys, we've had this discussion before, in PCI allocation. We don't do this. We tried switching the PCI region allocations to top-down, and IT WAS A FAILURE. We reverted it to what we had years of testing with.&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt;&gt; Don't just make random changes. There really are only two acceptable models of development: "think and analyze" or "years and years of testing on thousands of machines". Those two really do work.&nbsp;</p><p style='margin-left:22px'>
+&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt; We did do the analyzing, and only difference seems to be:&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+No.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Yinghai, we have had this discussion before, and dammit, you need to understand the difference between "understanding the problem" and "put in random values until it works on one machine".&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+There was absolutely _zero_ analysis done. You do not actually understand WHY the numbers matter. You just look at two random numbers, and one works, the other does not. That's not "analyzing". That's just "random number games".&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+If you cannot see and understand the difference between an actual analytical solution where you _understand_ what the code is doing and why, and "random numbers that happen to work on one machine", I don't know what to tell you.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+&gt; good one is using 0x80000000&nbsp;</p><p style='margin-left:22px'>
+&gt; and bad one is using 0xa0000000.&nbsp;</p><p style='margin-left:22px'>
+&gt;&nbsp;</p><p style='margin-left:22px'>
+&gt; We try to figure out if it needs low address and it happen to work because kernel was doing bottom up allocation.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+No.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Let me repeat my point one more time.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+You have TWO choices. Not more, not less:&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+ - choice #1: go back to the old allocation model. It's tested. It doesn't regress. Admittedly we may not know exactly _why_ it works, and it might not work on all machines, but it doesn't cause regressions (ie the machines it doesn't work on it _never_ worked on).&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+   And this doesn't mean "old value for that _one_ machine". It means "old value for _every_ machine". So it means we revert the whole bottom-down thing entirely. Not just "change one random number so that the totally different allocation pattern happens to give the same result on one particular machine".&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+   Quite frankly, I don't see the point of doing top-to-bottom anyway, so I think we should do this regardless. Just revert the whole "allocate from top". It didn't work for PCI, it's not working for this case either. Stop doing it.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+ - Choice #2: understand exactly _what_ goes wrong, and fix it analytically (ie by _understanding_ the problem, and being able to solve it exactly, and in a way you can argue about without having to resort to "magic happens").&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Now, the whole analytic approach (aka "computer sciency" approach), where you can actually think about the problem without having any pesky "reality" impact the solution is obviously the one we tend to prefer. Sadly, it's seldom the one we can use in reality when it comes to things like resource allocation, since we end up starting off with often buggy approximations of what the actual hardware is all about (ie broken firmware tables).&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+So I'd love to know exactly why one random number works, and why another one doesn't. But as long as we do _not_ know the "Why" of it, we will have to revert.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+It really is that simple. It's _always_ that simple.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+So the numbers shouldn't be "magic", they should have real explanations. And in the absense of real explanation, the model that works is "this is what we've always done". Including, very much, the whole allocation order. Not just one random number on one random machine.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+                        Linus                   &nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style=''>
+[1] <a href="http://thread.gmane.org/gmane.linux.kernel/1126136">http://thread.gmane.org/gmane.linux.kernel/1126136</a>&nbsp;</p>

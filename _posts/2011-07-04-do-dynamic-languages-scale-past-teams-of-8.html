@@ -1,0 +1,32 @@
+---
+layout: post
+title: do dynamic languages scale past teams of 8?
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+do dynamic languages scale past teams of 8?</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+at work we've debated a few times whether languages like Python are suitable for medium+ scale codebases. We don't know the answer, but our instinct is that while there may be a large productivity boost in the early stages of a project, as the codebase and team matures to, oh, say 8 engineers, you'd reach an asymptote where the productivity gains of a dynamic language are negated by the friction of poorer toolchain support (think eclipse/java code navigation and refactoring tools).&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Interesting discussion here about Twitter's gradual shift from Rails to JVM-languages[1]:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'><span style="font-family:arial;">
+<span style="font-family:arial;font-style:italic;">"</span><span style="color:rgb(51, 51, 51);font-style:italic;font-family:Lucida, 'Lucida Grande', Tahoma, sans-serif;"> as we build new services, if we choose to build them from scratch, in order to achieve better encapsulation we move them into the JVM, because the performance concerns outweigh any sort of productivity or agility downside those languages might have."</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+he seems to talk about performance a lot, but i dont know if i like that argument -- they talk about "removing concerns" -- finding shallower abstractions, a more bare-metal factoring, probably has as much to do with their performance gains as moving off of rails. but im speculating. he flips directions later -- i think the article is somewhat confused or unclear, they are arguing from both directions. not that this is necessarily inconsistent or wrong.</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:arial;">
+<span style="font-family:arial;font-style:italic;">"</span><span style="font-family:Lucida, 'Lucida Grande', Tahoma, sans-serif;font-style:italic;">You might assume that the move to the JVM was largely driven by performance and scalability concerns, but in fact the existing Twitter codebase performs well. As such the company isn't being forced into a ground-up re-write to allow it to continue to grow. Rather, the move to JVM is driven as much by a need for better developer productivity as it it for better performance."</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:Lucida, 'Lucida Grande', Tahoma, sans-serif;font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:arial;">
+</span><span style="color:rgb(51, 51, 51);font-style:italic;font-family:Lucida, 'Lucida Grande', Tahoma, sans-serif;">"I would say about half of the productivity gain is purely because of accumulated technical debt in the search Rails stack. And the other half is that, as search has moved into a Service Oriented Architecture and exposes various APIs, static typing becomes a big convenience in enforcing coherency across all the systems. You can guarantee that your dataflow is more or less going to work, and focus on the functional aspects. Whereas for something like building a web page you don't want to recompile all the time, you don't really want to worry about whether in some edge condition you are going to get a type you didn't expect. But as we move into a light-weight Service Oriented Architecture model, static typing becomes a genuine productivity boon. And Scala gives you the same thing."</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);font-family:Lucida, 'Lucida Grande', Tahoma, sans-serif;">
+[1] </span><span style="font-family:arial;"><a href="http://www.infoq.com/articles/twitter-java-use">http://www.infoq.com/articles/twitter-java-use</a></span>&nbsp;</p>

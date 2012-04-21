@@ -1,0 +1,30 @@
+---
+layout: post
+title: I'm calling native code from C# and it crashes, how do i catch the exception?
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+I'm calling native code from C# and it crashes, how do i catch the exception?</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+my buddy asked this, maybe this will be helpful to someone.&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">"<span style="font-style:italic;color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">My call to the JNI code fails, and my program just crashed. I added a try/catch around my static method call, but there’s no exception caught. What’s the rule for catching exception to native method calls?" -- Kevin M</span></span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+when you say "exception" you mean in the context of a C# exception implementation as part of the dotnet framework. (exception of course is also a bigger concept, nothing preventing native code from using them too, but that's not what we're talking about here).</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+ </span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+if the "call to the native interface" is failing (meaning execution of your native function never happened), fix it so the call works. if the native code starts executing then crashes, try to fix the calling context (e.g. arguments you pass or other state) to prevent it from crashing.</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+ </span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+if native code crashes, its really a crash, app is dead, you just totally crashed the dotnet virtual machine. you need to prevent it. thats why its called "unsafe". there are things you can do like make the call in a second process so when the process crashes your app's main process still survives, this is what browsers do, one process per tab so if flash or activex or other native code crashes a tab, the other tabs survive.</span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+ </span>&nbsp;</p><p style=''><span style="color:rgb(51, 51, 51);background-color:rgb(255, 255, 255);">
+</span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://stackoverflow.com/questions/3183511/how-do-i-protect-my-c-app-from-crashing-when-calling-a-method-in-an-unmanaged-dl">http://stackoverflow.com/questions/3183511/how-do-i-protect-my-c-app-from-crashing-when-calling-a-method-in-an-unmanaged-dl</a></span>&nbsp;</p>

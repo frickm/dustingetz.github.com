@@ -1,0 +1,27 @@
+---
+layout: post
+title: functional decomposition is the silver bullet
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+<span style="display:none;background-color:rgb(255, 255, 255);">functional decomposition is the silver bullet</span></span>&nbsp;</p><p style=''><span style="background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="background-color:rgb(255, 255, 255);">
+<span style="background-color:rgb(255, 255, 255);font-style:italic;">"Composable programs are easier to reason about. We may (confidentally) determine program behaviour by determining the behaviour of sub-programs -&gt; fewer bugs... Composable programs scale indefinitely, by composing more and more sub-programs."</span>&nbsp;</p><p style='margin-left:44px'><span style="background-color:rgb(255, 255, 255);font-style:italic;">
+</span>-- Tony Morris, What Does Functional Programming Mean [1]</span>&nbsp;</p><p style=''><span style="font-style:italic;background-color:rgb(255, 255, 255);">
+</span></span>&nbsp;</p><p style=''><span style="background-color:rgb(255, 255, 255);">
+the significance: non-composable programs (~=, i think, stateful programs), the number of possible program states multiplies, causing exponentially compounding complexity. composable programs have linearly growing complexity.</span>&nbsp;</p><p style=''><span style="background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="background-color:rgb(255, 255, 255);">
+let that sink in. if this theory is correct, functional decomposition allows us to reach the theoretical lower-bound in software complexity. this is the silver bullet, folks.</span>&nbsp;</p><p style=''><span style="background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="background-color:rgb(255, 255, 255);">
+[1] </span><a href="http://dl.dropbox.com/u/7810909/docs/what-does-fp-mean/what-does-fp-mean/html/index.html">http://dl.dropbox.com/u/7810909/docs/what-does-fp-mean/what-does-fp-mean/html/index.html</a>&nbsp;</p>

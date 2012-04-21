@@ -1,0 +1,40 @@
+---
+layout: post
+title: java in practice: best way to stop using checked exceptions
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+java in practice: best way to stop using checked exceptions</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+RuntimeException -- root class for unchecked exceptions. this is meant for "developer errors", like an assert, something that indicates a bug in the code, that the code is not expected to handle.&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+To free developers of dealing with the sorts of exceptions that occur as a result of programming errors or that the program could not be expected to catch (dereferencing a null pointer, falling off the end of an array, dividing by zero, and so on), some exceptions are nominated as unchecked exceptions (those that derive from RuntimeException) and do not need to be declared.&nbsp;</p><p style='margin-left:44px'>
+-- IBM java technical library [1]&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Exception -- root class for all checked exceptions. compile time checks.&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+Checked exceptions represent useful information about the operation of a legally specified request that the caller may have had no control over and that the caller needs to be informed about -- for example, the file system is now full, or the remote end has closed the connection, or the access privileges don't allow this action.&nbsp;</p><p style='margin-left:44px'>
+ -- IBM java technical library [1]&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+so, for whatever reason you decide that java's checked exceptions suck and you don't want to use them. what are the possible approaches?&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-weight:bold;">make all application exceptions inherit RuntimeException</span>, and wrap any and all third party code (e.g. APIs like java.sql) in code that converts checked exceptions to RuntimeExceptions. then, all application interfaces don't declare any exceptions. if you have a legacy codebase, this means all your interfaces will change and no longer have any 'throws' clauses, breaking backwards compatibility.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-weight:bold;">add 'throws exception' to all application interfaces</span>. this is the lazy way out, but is easy, and doesn't require wrapping exceptions from third party apis, and doesn't break backwards compatibility. its bad because it poisons any future code that wants to use checked exceptions, which will require wrappers like the above. but if you're writing a public API you should probably bother to get your checked exceptions correct. (Keep in mind that <span style="font-style:italic;">technically</span> we're still using checked exceptions, but we've removed any compile-time information they give us)&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+opinion: inheriting RuntimeException everywhere breaks enough old/existing code that the transition period ends up pushing the problem under the rug (wrapping exceptions in the wrong places) instead of actually fixing it. it also requires discipline to not add 'throws exception' everywhere when eclipse does it for us. this increased friction has no balancing utility because we've already agreed that we just don't care about checked exceptions and just want them to get out of our way. Good luck getting your whole team to remember to do it, all the time. in practice, I think wrapping other people's checked exceptions into runtime exceptions option is worse than sucking it up and using tightly specified checked exceptions.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-family:arial;">This is all-or-nothing for one approach vs the other. a search for "throws exception" in one of my projects at work returns 1740 results. for all practical purposes, removing 'throws exception' from our method signatures is a waste of time when just declaring it whenever eclipse wants us to has exactly the same utility in terms of "just get out of my way so i can code".</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[1] <a href="http://www.ibm.com/developerworks/java/library/j-jtp05254/index.html">Java theory and practice: The exceptions debate</a>&nbsp;</p>

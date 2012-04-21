@@ -1,0 +1,34 @@
+---
+layout: post
+title: mainstream FP is a ways away, due to out-of-band problems
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+mainstream FP is a ways away, due to out-of-band problems</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+just banged out this email on a newsgroup, cross-posting here.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Dan Mead wrote[1]:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="color:rgb(34, 34, 34);font-style:italic;background-color:rgb(255, 255, 255);">...[perhaps] Haskell is not actually supposed be used in production environments. It better serves as a sandbox for language and compiler features that eventually make it's way into industry. This is a serious view that Simon Peyton-jones seems to support. He even says it in an interview along with Joe Armstrong (the erlang creator)[2]</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+interesting note about haskell "not supposed to be used" in production. i'll have to research more about what SPJ thinks (thank you for the link, i bookmarked for later). it's interesting because, "rock solid" systems like life support on a space ship, should absolutely be proven code. i wonder what the state of the art is in terms of proving the haskell runtime? i wonder if anyone proves their program, then meticulously translates it into C. </span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+i speculate almost all the money in building software is centered around "enterprise" problems, whatever that is. enterprises have out-of-band problems like, who will maintain this when the subcontractor folds? who will maintain this when the guy who wrote half the code decides to quit and study zen on a mountain in india? what if, after a few cycles of the project, the enterprise re-orgs and a young manager gives the project to someone cheaper? or a democrat gets elected president and defense contracts get cut, is the half-finished project able to be leveraged somewhere else? executive leadership looks at these problems and perceives risk with languages that aren't already proven in their domain, and franky (need to reflect more) their estimation of risk may even be correct. the comments in that HN thread certainly demonstrate that there isn't clear consensus on haskell's place in the market.</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+Scala, at least, has publicly acknowledged traction at twitter/foursquare, but of course Scala has an implicit goal of "replacing java" in the types of projects java is used. until yesterday i was super gung-ho about how this was inevitable and scala = god's gift to mankind, but then yesterday this post from two of scala's biggest advocates scared the crap out of me: </span><span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://www.infoq.com/articles/barriers-to-scala-adoption">http://www.infoq.com/articles/barriers-to-scala-adoption</a></span><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);"> . great read on the out-of-band stuff that really does matter with respect to FP becoming mainstream.</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+</span>&nbsp;</p><p style=''><span style="color:rgb(34, 34, 34);background-color:rgb(255, 255, 255);">
+[1] Dan Mead: </span><a href="http://groups.google.com/group/philly-lambda/msg/32f63fa7e6fa14ad">http://groups.google.com/group/philly-lambda/msg/32f63fa7e6fa14ad</a>&nbsp;</p><p style=''>
+</a>[2] Peyton-Jones interview about haskell <span style="color:rgb(17, 85, 204);background-color:rgb(255, 255, 255);"><a href="http://www.infoq.com/interviews/armstrong-peyton-jones-erlang-haskell">http://www.infoq.com/interviews/armstrong-peyton-jones-erlang-haskell</a></span>&nbsp;</p>

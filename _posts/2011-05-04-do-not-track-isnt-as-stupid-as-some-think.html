@@ -1,0 +1,68 @@
+---
+layout: post
+title: do-not-track isn't as stupid as some think
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+do-not-track isn't as stupid as some think</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Do Not Track is a project and draft W3C proposal[1] from a loose community of interested people. As far as I can tell, no company backs it, though some browser vendors (Mozilla, Microsoft, Apple) suport it. From the Do Not Track project website:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">"Do Not Track is a technology that enables users to opt out of third-party web tracking, including behavioral advertising. At present a user cannot opt out of many of the hundreds of tracking services and advertising networks; those that do allow opting out each require setting (and not deleting!) an opt-out cookie. Much like the popular Do Not Call registry, Do Not Track provides users with a single, persistent setting to opt out of web tracking.</span>&nbsp;</p><p style=''><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+"Here's how it works: Whenever a web browser requests content or sends data using HTTP, the protocol that underlies the web, it can optionally include extra information, called a "header." Do Not Track simply adds a header indicating the user wishes to not be tracked. Unlike Do Not Call, Do Not Track is not a list; rather, it employs a decentralized design, avoiding the substantial technical and privacy challenges inherent to compiling, updating, and sharing a comprehensive registry of tracking services or web users."</span>&nbsp;</p><p style='margin-left:44px'>
+-- Do Not Track website[2]&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+The Do Not Track project was covered on Hacker News last month, where I commented:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+"<span style="font-style:italic;">uninformed rant: Do-not-track headers feel like a sham. When you access content and services funded by advertising, you opt in to advertising. I think a service would be fine to ignore the header, because the user has presumably already implied permission to be tracked by accessing the service.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+"Consumers want 'cheap' far more than they want privacy. They sign up for retail credit cards to save $20 on a single order. They scan their grocery keytag every time they shop. They give their mailing address for a free t-shirt. Maybe you guys don't do this, but I still find myself irrationally hemming and hawing over a small purchase. To fix this, the way we think about money as a culture would have to shift.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+"Privacy awareness is a good thing coming out of this, and consumers understanding privacy can lead to better choices and more competition, but in the short term I don't see much practical impact.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+"...Its interesting what might happen if this movement gained enough traction to hurt google's adwords revenue. How much is a tracking cookie worth to them? would they require opting-in to tracking to use google services? is no-track enough of a competitive distinction that mainstream consumers will pay money for no-track services? is it enough money for a no-track business to compete, and will they find unexplored ways to make money?"</span>&nbsp;</p><p style='margin-left:44px'><span style="font-style:italic;">
+</span>-- me, on HN [3]&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+I totally missed the point, and I think a lot of other people have too. This has nothing to do with primary parties and services (Google, Amazon, their advertizers) that I have a EULA and privacy contract with. Its only third party tracking, which I did not opt-in for, like the Facebook 'like' button popping up on all sorts of random web sites:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">"The Facebook 'Like' button is a prominent example of non-advertising third-party tracking. Facebook can monitor all the pages you visit that incorporate the button, whether or not you click it and whether or not you have an account.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+"Such 'social plugins' may be embedded on particularly sensitive sites; England's National Health Service, for example, includes a Like button on its condition pages."</span>&nbsp;</p><p style='margin-left:44px'><span style="font-style:italic;">
+</span>-- Do Not Track project's letter to the FTC [4] &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+It's obvious to anyone technical that the third parties have no incentive to follow the standard. It seems that the real objective of the Do Not Track project is to raise awareness of privacy issues in appropriate organizations, who do have the power to influence privacy laws.&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">"The opt-out cookies and their plug-in are not aimed at consumers.They are aimed at policy makers. Their purpose is to give them something to talk about when they get called in front of Congress. No one is using this plug-in and they don't expect anyone to use it."</span>&nbsp;</p><p style='margin-left:44px'>
+-- security researcher Christopher Soghoian's comment to Wired [5] &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Hey, that's actually pretty smart!&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Apple comments:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">"There is, therefore, an urgent need to document what, fairly exactly, it means. What stops working? If nothing stops working, from the user's point of view, there is a risk that it will be turned on all the time. Can I login? Buy something? What constitutes 'track'? If someone buys something, I can obviously record the purchase, and pretty clearly the affect on my inventory. Am I allowed to record statistical data (e.g. the type of goods bought at different times of day)? At what point does this 'personally derived data' turn into 'tracking'?"</span>&nbsp;</p><p style='margin-left:44px'>
+-- statement from Apple's Multimedia and Software Standards group [6] &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Google got some bad press a month ago for declaring no intent to enable Do Not Track headers in Chrome, but I don't think their response is unreasonable:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">“The idea of 'Do Not Track' is interesting, but there doesn't seem to be wide consensus on what 'tracking' really means, nor on how new proposals could be implemented in a way that respects people’s current privacy controls. We’re encouraged that standards bodies are working on these issues, and we will continue to be involved closely."</span>&nbsp;</p><p style='margin-left:44px'>
+-- Google statement to Wired[5]&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[1] <a href="http://datatracker.ietf.org/doc/draft-mayer-do-not-track/?include_text=1">draft W3C standard proposal&nbsp;</p><p style=''>
+</a>[2] <a href="http://donottrack.us/">http://donottrack.us/</a>&nbsp;</p><p style=''><a href="http://datatracker.ietf.org/doc/draft-mayer-do-not-track/?include_text=1">
+</a>[3] <a href="http://news.ycombinator.com/item?id=2456127">my original (incorrect) comment on HN</a>&nbsp;</p><p style=''><a href="http://datatracker.ietf.org/doc/draft-mayer-do-not-track/?include_text=1">
+</a>[4] <a href="http://donottrack.us/docs/FTC_Privacy_Comment_Stanford.pdf">http://donottrack.us/docs/FTC_Privacy_Comment_Stanford.pdf</a>&nbsp;</p><p style=''>
+[5] <a href="http://www.wired.com/epicenter/2011/04/chrome-do-not-track/">http://www.wired.com/epicenter/2011/04/chrome-do-not-track/</a>&nbsp;</p><p style=''><a href="http://donottrack.us/docs/FTC_Privacy_Comment_Stanford.pdf">
+</a>[6] <a href="http://www.w3.org/2011/track-privacy/papers/Apple.pdf">http://www.w3.org/2011/track-privacy/papers/Apple.pdf</a>&nbsp;</p>

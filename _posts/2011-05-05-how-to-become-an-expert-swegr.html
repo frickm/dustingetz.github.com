@@ -1,0 +1,40 @@
+---
+layout: post
+title: how to become an expert swegr
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+how to become an expert swegr</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+From nostrademons on HN. Too good to post only a snippet.&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-style:italic;">Hacking's an interesting case because all practice is also product. That means that if you practice enough, you eventually "finish" your practice material (which is great in one respect, but it means you have to find a new one to practice on, which often has its own probles). It also means that it's impossible to practice without a project to practice on - I know some blogs suggest "code kata", but most of the interesting problems in software development occur when you get past 3000 lines or so, and you can't really see that when you're writing Quicksort for the umpteenth time.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+Anyway, here's what I think the difference between an expert hacker and an experienced non-expert is. <span style="font-style:italic;font-weight:bold;">When faced with a bug, a non-expert will fix the bug. An expert or prospective expert will ask himself "What caused this bug, and how can I prevent it from ever happening again?"</span></span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+The answer will usually be some form of unit/regression testing, so the prospective expert will write some tests to catch the bug and then fix it. Then they'll ask themselves "What prevented me from writing tests in the first place?" and the answer will usually be some combination of tedium and lack of defined interfaces. So they'll fix the first problem by learning how to abstract test state into reusable fixtures, and they'll fix the second by refactoring the production code so it has clearly defined public interfaces with defined inputs and outputs.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+Then, after doing this a few times, the prospective expert will ask themselves "Where are my bugs coming from? What are most of my tests checking?" And if their code is anything like mine, the answer will be "the use and abuse of mutable state". So they'll go through their code looking for places where they can use purely functional techniques to eliminate mutable state. Or they'll change their APIs so that they eliminate any call-order dependencies they've programmed in. Or they'll encapsulate their mutable state in certain well-defined objects with known lifetimes.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+Then the prospective expert will look at this activity and think "how could this be made less tedious?" And the answer will often be to add some extra abstractions which have now been made obvious because of the data flow's been exposed.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+Then they add some more features, keep track of the root causes of their bugs, and fix the next most common error. (Which in my experience is usually type errors, but unfortunately working in a statically-typed language seems to eliminate many of the opportunities for abstraction that are exposed in the last step, unless it's Haskell, which isn't yet practical for webapps.)</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+Disclaimer: I'm not an expert. Yet. I am, however, noticeably better than I was 8 months ago when I left my last job. One of the reasons I left was because there was a ceiling to how many of the above techniques I could apply - I could unit test my own code, but I couldn't change the API to make it more stateless, or eliminate nulls as a legal parameter to methods, or separate components so they were each stubbable on the local computer.</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-style:italic;">
+I have known a couple programmers that were real experts though - one wrote the filesystem and transaction server for Stratus and has been an early engineer and tech lead (and sometimes VP of engineering) of 3 IPOs. She was full of all these techniques, some obvious and some pretty subtle, for reducing bug rates. For example, she'd define a private copy constructor on any class that wasn't intended to be passed by value, so the compiler would flag shallow copies as an error. Then she defined this in a mixin base class and inherited from it, so she didn't need to implement the pattern in every single one of her classes. Or she'd use references vs. pointers as a way of flagging object ownership: they're exactly the same thing, but the compiler won't let you delete a reference, so she'd pass by reference if ownership wasn't being transferred and pointer if it was. Every language has these sort of subtle tricks: in JavaScript, it's things like not extending built-in prototypes and using closures effectively. The difference between deliberate practice and mundane programming is that you're actively looking for patterns like this when you deliberately practice.</span>&nbsp;</p><p style='margin-left:44px'>
+&nbsp;</p><p style='margin-left:44px'>
+-- nostrademons[1], in 2008&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[1] <a href="http://news.ycombinator.com/item?id=185153">http://news.ycombinator.com/item?id=185153</a>&nbsp;</p>

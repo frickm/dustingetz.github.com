@@ -1,0 +1,52 @@
+---
+layout: post
+title: how to demo an enterprise iPad app near tech conference wifi with a pringles can
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+how to demo an enterprise iPad app near tech conference wifi with a pringles can</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-family:arial;">We want an iPad connected to WiFi on a demo network we control. We brought a $40 home-grade wireless router, which we plug our host laptops into, and bridge our VMs onto this network. The iPad connects to our wireless thus has connectivity to our demo environment without exposing the demo environment to public networks. Challenge: at a tech conference, lots of devices need lots of data in the air which means lots of access points. Tech-conference wifi overwhelms our home-grade local wifi signal, and we're stuck with zero bars.</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+First, lets understand how conference wifi is set up. There seem to be two approaches to conference wireless channel management. The first is to spread the APs across channels 1, 6, 11:</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:arial;">
+</span>Effective bandwidth per WIFI channel is 20 MBit/s. WIFI has 11 channels. That means that you will never get more that 220 MBit/s in the air, ever. This bandwidth has to be shared by everybody in the room. If you put 5000 people in a relatively small room, then your WIFI will be slow. There is no way around that. It is simply physics.&nbsp;</p><p style='margin-left:44px'>
+-- good article on <a href="http://non-blocking.io">non-blocking.io</a> [1]&nbsp;</p><p style=''><a href="http://www.nonblocking.io/2011/05/how-to-make-wifi-work-at-tech.html">
+&nbsp;</p><p style='margin-left:22px'>
+</a>Overall a good article, although the claim that "WiFi has 11 channels and can give you 220Mbit in the air" is just wrong. You'll never deploy on all 11 channels without causing massive adjacent channel interference. 802.11 likes 25 MHz per AP, and the 2.4GHz channels are only 5 MHz apart. Deploying on anything other than 1, 6 or 11 will cause more problems than it will solve.&nbsp;</p><p style='margin-left:44px'><a href="http://www.nonblocking.io/2011/05/how-to-make-wifi-work-at-tech.html">
+</a>-- willidiots on HN &nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+Besides specifying the centre frequency of each channel, 802.11 also specifies (in Clause 17) a spectral mask defining the permitted distribution of power across each channel. The mask requires that the signal be attenuated by at least 30 dB from its peak energy at ±11 MHz from the centre frequency, the sense in which channels are effectively 22 MHz wide. One consequence is that stations can only use &nbsp;</p><p style='margin-left:22px'>
+every fourth or fifth channel without overlap, typically 1, 6 and 11 in the Americas.&nbsp;</p><p style='margin-left:44px'>
+-- wikipedia &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+The second approach is to deploy only on one channel:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+"Deploying on anything other than 1, 6 or 11 will cause more problems than it will solve,"&nbsp;</p><p style='margin-left:22px'>
+This is a fundamental mistake. You are correct that the transmit mask of WiFi allows for 3 'non-overlapping' channels in the 2.4GHz band, but the receivers won't allow simultaneous operation on these three channels since the advent of 802.11g (and 802.11n made the situation worse.)&nbsp;</p><p style='margin-left:22px'>
+The receivers don't have enough adjacent channel rejection (ACR) to deal with a strong (i.e. closer or high-EIRP) signal on an ajacent channel.&nbsp;</p><p style='margin-left:22px'>
+At 6Mbps, the IEEE standard requires 16 dB of adjacent channel rejection. The amount of ACR required by the standard is lower as the modulation rate increases. At 18Mbps the IEEE standard requires 11dB of ACR. At 54Mbps, the ACR required by the standard is -1dB. While some chipsets perform above these requirements one has to assume that the clients perform at the minimum, since there is no way to control what client will wander into the room next.&nbsp;</p><p style='margin-left:22px'>
+Nobody wants to believe it, but the way to make 2.4GHz WiFi work for large conferences is to run all the APs on the same channel (in any given 'band')&nbsp;</p><p style='margin-left:44px'>
+-- gonzo on HN &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Manually configuring our local wireless to an in-between channel seemed to intermittently help, but still 95% of the time we had zero bars, so presumably our conference wireless was spread across channels 1,6,11. The short term solution was to use a <a href="http://lts.cr/cHf">pringles can</a>[5] to create a more powerful signal in one direction, and hold the iPad directly above the "cantenna". Not great in practice, a directional signal means you can't move the iPad away. Impractical for casual demos.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+The real solution is two-pronged. 1, rather than a $40 household-grade wireless router, use a more powerful commercial wireless router. 2, make sure we broadcast in the less-popular 5ghz band, which iPad-friendly 802.11n wireless networks support. the 5ghz band has many more available channels so our signal is much less likely to be drowned out by dozens of APs operating in 2.4ghz band, and even if the conference broadcasts in 5ghz band, there are 5 times more available channels[5] so it should be easier to for the router to autoconfigure itself to an unused channel.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+[1] <a href="http://www.nonblocking.io/2011/05/how-to-make-wifi-work-at-tech.html">http://www.nonblocking.io/2011/05/how-to-make-wifi-work-at-tech.html</a>&nbsp;</p><p style=''>
+[2] <a href="http://news.ycombinator.com/item?id=2550399">http://news.ycombinator.com/item?id=2550399</a>&nbsp;</p><p style=''>
+[3] <a href="http://news.ycombinator.com/item?id=2550808">http://news.ycombinator.com/item?id=2550808</a>&nbsp;</p><p style=''>
+[4] <a href="http://en.wikipedia.org/wiki/IEEE_802.11#802.11n">http://en.wikipedia.org/wiki/IEEE_802.11#802.11n</a>&nbsp;</p><p style=''>
+[5] <a href="http://lts.cr/cHf">"cantenna" pic</a>&nbsp;</p><p style=''>
+[6] <a href="http://en.wikipedia.org/wiki/List_of_WLAN_channels#5.C2.A0GHz_.28802.11a.2Fh.2Fj.2Fn.29">http://en.wikipedia.org/wiki/List_of_WLAN_channels#5.C2.A0GHz_.28802.11a.2Fh.2Fj.2Fn.29</a>&nbsp;</p>

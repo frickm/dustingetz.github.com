@@ -1,0 +1,36 @@
+---
+layout: post
+title: I have a blog serving static content from a database, how can i make it faster?
+---
+<h1>{{ page.title }}</h1>
+
+<span style="style/fontWeight:bold;">
+I have a blog serving static content from a database, how can i make it faster?<br></span><span style="">
+<br>
+I am rolling my own blog engine hosted on Google App Engine. Rendered blog posts are stored and served straight from the datastore. I want to implement some sort of caching architecture on principle, as a learning experience, so there is zero datastore load to serve static HTML. This saves me money (CPU cycles) if I get slashdotted. Not necessarily latency, as the datastore is designed to scale.<br>
+<br>
+</span><span style="font-weight:bold;">App Engine blobstore API<br></span><span style="">
+this is a custom datastore which is optimized for high-performance reads.<br>
+<br>
+</span><span style="font-weight:bold;">App Engine memcache API<br>
+</span><span style="">Serve each rendered post from memcache (part of the appengine API). That was too easy, so let's look at our other options. The memcache is shared application wide, so its not any closer to users. Its also "unreliable" in that data may be cleared from cache at any time, but who cares, it won't happen a lot.<br>
+<br>
+</span><span style="font-weight:bold;">In-memory databases like Redis<br>
+</span><span style="">They're diskless and fast so they can be used to implement a cache server. <a href="http://jimplush.com/blog/article/179/What-happens-when-you-are-the--number-1-article-on-Hacker-News">this guy </a>used Redis to cache stuff when he hit #1 on HN.<br>
+<br>
+</span><span style="font-weight:bold;">Content Delivery Networks<br>
+</span><span style="">"A CDN is a system which sends data to a user using nearby servers, rather than a central server." <a href="http://www.google.com/url?sa=D&q=http%3A%2F%2Fdavedash.com%2F2009%2F03%2F08%2Fappengine-is-not-a-free-cdn%2F"></span><span style="color:rgb(0, 62, 168);font-family:arial, sans-serif;">cite: Dave Dash</span><span style=""> </a>This means the big files don't have to travel as far. This does the caching we need and more. If our entire blog is static, we can put a CDN in front of it and be golden. If parts of the blog are dynamic, the static portions would have to be served from another hostname, so the CDN can buffer only the static host. This example Facebook image resource shows that static resources are served from another host: <a href="http://a3.phobos.ak.fbcdn.net/hphotos-ak-snc6/168376_680495569322_6103645_38357296_5905348_n.jpg?dl=1">http://a3.phobos.ak.fbcdn.net/hphotos-ak-snc6/168376_680495569322_6103645_38357296_5905348_n.jpg?dl=1.</a> It's hard (more expensive) to delete things from a CDN.<br>
+<br>
+This is a great answer. I can use DNS to map "<a href="http://blog.dustingetz.com">blog.dustingetz.com"</a> to a CDN which mirrors the real app, which is still accessible from a non-cached hostname.<br>
+<br>
+</span><span style="font-weight:bold;">Amazon CloudFront (CDN)<br></span><span style="">
+<a href="http://aws.amazon.com/cloudfront/">Amazon Cloudfront </a>is a cheap and rock-solid mirroring CDN.  <a href="http://coderjournal.com/2010/12/setting-up-a-cloudfront-mirroring-cdn-in-5-minutes/">Good article on how to set it up. </a>$0.15 per gigabyte, so roughly one cent per month for me right now.<br>
+<br><a href="http://coderjournal.com/2010/12/setting-up-a-cloudfront-mirroring-cdn-in-5-minutes/">
+</span><span style="font-weight:bold;">A</a>mazon S3 is not a CDN<br>
+</span><span style="">S3 optimizes for bandwdith, not for latency. Its good at serving really big resources. You can run a real CDN on top of it to help latency. <a href="http://aws.typepad.com/aws/2011/02/host-your-static-website-on-amazon-s3.html">S3 is an effective host for a purely static web page,</a> but then you have to write scripts to update directly S3 with any changes to the content. You can't get a free mirror through DNS tricks.<br><a href="http://coderjournal.com/2010/12/setting-up-a-cloudfront-mirroring-cdn-in-5-minutes/">
+<br>
+</span><span style="font-weight:bold;">A</a>pp Engine is not a CDN<br>
+</span><span style="">App engine's "static file" support is roughly equivalent to Amazon S3, but since its the same framework as our app, we can serve from the same hostname as the dynamic parts. It would be annoying to use because we'd have to "upload" the rendered html via the admin scripts; you don't have control of this via an application API. So no free mirror-like functionality.<br>
+<br>
+</span><span style="font-weight:bold;">Nginx<br></span><span style="">
+nginx can intercept all traffic, cache static requests and let through the rest. This is conceptually the same as App Engine's static resource support. Administration overhead of running an nginx server somewhere. This is also helpful to <a href="http://radomirml.com/2011/01/30/reverse-proxy-for-gae-application-using-nginx-and-ssl">get SSL from your branded hostname,</a> instead of the appspot.com subdomain. </span>

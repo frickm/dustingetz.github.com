@@ -1,0 +1,47 @@
+---
+layout: post
+title: "confident code" vs "timid code"
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+"confident code" vs "timid code"</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<a href="http://avdi.org/devblog/">Avdi Grimm</a> articulates several metaphors for thinking about well-constructed code at the tactical level. This is in essense a discussion of essential vs accidental complexity, but without sounding so academic. Thanks Avdi, talking about software quality in terms of complexity seems to only turn out well when the participants already understand accidental complexity. Looking forward to using the metaphors Avdi established.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Avdi defines "narrative structure", as the opposite of "haphazard structure". Well written code tends to read as if it was narrated to a future maintainer. "Gather input, Perform work, Deliver results, Handle errors. In that order!"&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+"Timid Code" looks like this: &nbsp;</p><p style=''>
+<a href="http://avdi.org/talks/confident-code-2010-01-12/timid-code-annotated.png">http://avdi.org/talks/confident-code-2010-01-12/timid-code-annotated.png</a>&nbsp;</p><p style=''>
+"Confident Code" looks like this: &nbsp;</p><p style=''>
+<a href="http://avdi.org/talks/confident-code-2010-01-12/confident-code-annotated.png">http://avdi.org/talks/confident-code-2010-01-12/confident-code-annotated.png</a>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Thanks Avdi, this is perfect.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+My notes quoted or paraphrased from his slides below.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Timid Code:&nbsp;</p><p style=''>
+ - Lives in fear &nbsp;</p><p style=''>
+ - Constantly second-guessing itself &nbsp;</p><p style=''>
+ - Randomly mixes input gathering, error handling, and business logic &nbsp;</p><p style=''>
+ - Imposes cognitive load on the reader &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+"Nil checks are the most common form of timid code"&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+tricks to write confident code:&nbsp;</p><p style=''>
+- list-ify -- high level data structures lead to high level control flow&nbsp;</p><p style=''>
+- asserts and preconditions. asserts as documentation.&nbsp;</p><p style=''>
+- coerce liberally [disagree mostly, i'd prefer to make my value types well-defined at all times]&nbsp;</p><p style=''>
+- dynamically extend objects [like a monkey patch? that's a stretch..]&nbsp;</p><p style=''>
+- iterative style [i've been calling this functional style, or data-oriented style]&nbsp;</p><p style=''>
+- narrative code seperates business logic from input gathering. your business logic thus has only business conditionals!&nbsp;</p>

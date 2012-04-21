@@ -1,0 +1,35 @@
+---
+layout: post
+title: Javascript frameworks: JQuery vs EXT
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+Javascript frameworks: JQuery vs EXT</span>&nbsp;</p><p style=''>
+jQuery is for working with web pages. Ext JS is for writing GUI apps. That's a powerful difference. &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+From their respective websites:&nbsp;</p><p style=''>
+"jQuery is a fast and concise JavaScript Library that simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development." [jquery.com]&nbsp;</p><p style=''>
+"Ext JS is the developer's choice for building powerful desktop web applications using JavaScript and web standards." [sencha.com]&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+If you're writing a blog application, where you want to publish traditional HTML content to various formats (browsers, RSS, mobile), be searchable from google and stuff like that, jQuery is a good choice. It lets you add special effects like tooltips, transitions, selective highlights, form logic, basically just enhancements to your existing HTML. Its also very good at manipulating existing HTML ("traversing the DOM" [1]), which makes it ideal for writing plugins for existing web pages. I wrote an <a href="https://gist.github.com/905155">experimental bookmarklet</a>[2] which analyses the hackernews homepage to identify and highlight posts with high commenting activity. jQuery was great for <a href="https://gist.github.com/905150">extracting comment and vote counts</a>[3] from the hackernews HTML. Check out the <a href="http://docs.jquery.com/Tutorials:Live_Examples_of_jQuery">jQuery examples page</a>[4].&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+Ext JS is suited for web applications, like a calendar. Users will interact with your application like a desktop GUI app, and instead of thinking in HTML, you think in terms of GUI components, click events and data sources. Ext JS will generate all the underlying HTML for you. Your application won't feel like a web page, it will feel more like a desktop program. Of course Ext apps are hosted in a browser, but things like opening links in another window, and the forward/back buttons, often won't make sense. You can see this by googling for "extjs api", clicking through to the Ext API docs, browsing around then clicking 'back' on your browser: it won't take you to the previous doc you were looking at, but will take you back to google. Clicking 'forward' will bring you back to the Ext docs, but you don't go back to all your open pages. Joel calls this a leaky abstraction[5]. you can work around this[6], but it's against the grain of the framework. Check out the <a href="http://www.sencha.com/products/extjs/examples/">Ext JS examples page</a>[7].&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+<span style="font-size:0.8333333333333334em;">[1] <a href="http://en.wikipedia.org/wiki/Document_Object_Model">http://en.wikipedia.org/wiki/Document_Object_Model</a></span>&nbsp;</p><p style=''><span style="font-size:0.8333333333333334em;">
+[2] <a href="https://gist.github.com/905155">javascript code to run a jquery bookmarklet on an existing webpage</a></span>&nbsp;</p><p style=''><span style="font-size:0.8333333333333334em;">
+[3] <a href="https://gist.github.com/905150">simple jQuery code to extract comment and vote counts from hackernews HTML</a></span>&nbsp;</p><p style=''><span style="font-size:0.8333333333333334em;">
+[4] <span style="font-size:0.8333333333333334em;color:rgb(42, 93, 176);"><a href="http://docs.jquery.com/Tutorials:Live_Examples_of_jQuery">http://docs.</span><span style="font-size:0.8333333333333334em;color:rgb(34, 34, 34);background-color:rgb(255, 255, 204);">jquery</span><span style="font-size:0.8333333333333334em;color:rgb(42, 93, 176);">.com/Tutorials:Live_Examples_of_</span><span style="font-size:0.8333333333333334em;color:rgb(34, 34, 34);background-color:rgb(255, 255, 204);">jQuery</a></span></span>&nbsp;</p><p style=''><span style="font-size:0.8333333333333334em;">
+[5] <a href="http://www.joelonsoftware.com/articles/LeakyAbstractions.html">Joel's famous article on leaky abstractions</a></span>&nbsp;</p><p style=''><span style="font-size:0.8333333333333334em;">
+[6] <a href="http://edspencer.net/2009/01/using-exthistory.html">quick blog post on how to make Ext work with browser forward and back navigation</span>&nbsp;</p><p style=''><span style="font-size:0.8333333333333334em;">
+</a>[7] <span style="font-size:0.8333333333333334em;color:rgb(42, 93, 176);"><a href="http://www.sencha.com/products/extjs/examples/">http://www.sencha.com/products/extjs/examples/</a></span>&nbsp;</p>

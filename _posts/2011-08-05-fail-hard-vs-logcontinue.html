@@ -1,0 +1,35 @@
+---
+layout: post
+title: fail-hard vs log/continue
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+fail-hard vs log/continue</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+<span style="font-family:monospace;">if (!component.getStore) {</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:monospace;">
+wspt.error("DependentFieldPlugin requires a component that uses a Store");</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:monospace;">
+return;</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:monospace;">
+} </span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:monospace;">
+</span>&nbsp;</p><p style='margin-left:22px'><span style="font-family:monospace;">
+wspt.assert(component.getStore, "DependentFieldPlugin requires a component that uses a Store");</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+top way doesn't bust the page, bottom one does. in general, i think it is a very good habit to fail as hard as possible, including busting the page and getting a nice &amp; nasty javascript error in your console.</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>when it comes to diagnostics, we know assertions are always true, but the error/return/proceed, we can't look at the code and know our state anymore without inspecting in a debugger due to the branch, which makes remote diagnostics really-friggin-hard. fail-fast reduces possible error states &amp; complexity.&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+see raymond chen's blog for discussion of the issue from all sides:</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+<a href="http://blogs.msdn.com/b/oldnewthing/archive/2009/12/10/9934911.aspx">Only an idiot would have parameter validation, and only an idiot would not have it</a></span>&nbsp;</p><p style=''><span style="font-family:arial;">
+<a href="http://blogs.msdn.com/b/oldnewthing/archive/2011/07/29/10190885.aspx">Hey, let's report errors only when nothing is at stake!</span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</a></span>&nbsp;</p><p style=''><span style="font-family:arial;">
+</span>i would add that in the case of windows and maintaining backwards compat with previously undefined behavior, they forced themselves into a corner of needing to continue even though the program behavior is no longer well-defined, because none of the code was well-defined in the first place. but in a less challenging environment forcing every single detail to be well defined at all times is appealing to me.&nbsp;</p>

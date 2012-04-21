@@ -1,0 +1,53 @@
+---
+layout: post
+title: clear code vs correct code
+---
+<h1>{{ page.title }}</h1>
+
+
+<style type="text/css"> 
+p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin:0px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+</style>
+    <p style=''><span style="display:none;">
+clear code vs correct code</span>&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+so what exactly do we mean by readability, anyway? Lets start with a blogger's criticism of Scala.&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+The complexity of functional programming is perhaps a bit easier to explain. It’s certainly possible to write nearly conventional code in Scala. Here, for example, is Scala code for a conventional way to sum the elements of a list of integers: &nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:44px'>
+<span style="font-family:monospace;">def sum(l: List[int]): int = {</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:monospace;">
+    var result: int = 0</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:monospace;">
+    for (item &lt;- l)</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:monospace;">
+        result += item</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:monospace;">
+    return result</span>&nbsp;</p><p style='margin-left:44px'><span style="font-family:monospace;">
+}</span>&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+But that’s not “the Scala way”. A good Scala programmer is expected to use this instead: &nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:44px'>
+<span style="font-family:monospace;">def sum(l: List[int]): int = (0/:l){_+_}</span>&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Isn’t that lovely? This code (that appears to be line noise) is probably the most classic example of a catamorphism (a data transform that results in less data out than in). Basically it says, initialize the result to 0, then go from beginning to end through l, and for each item compute the new result to be result+item. Oh wait, isn’t that exactly what our earlier code did? Well, um, yes, but… this way doesn’t use any of that evil nasty mutable state. This code might be darned near illegible to normal people, but it is the pinnacle of purity and virtue in the FP world.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:44px'>
+-- <a href="http://creativekarma.com/ee.php/weblog/comments/my_verdict_on_the_scala_language/">CreativeKarma: My verdict on the Scala language blog</a> (dude, put your name on your blog so i can cite you lol)&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+so, yeah, too clever for its own good. maybe. which one is more likely to have a bug? someone who doesn't know Scala and FP might see gibberish in the FP style, but then you take three minutes to figure out what its doing, and now you know, and you can look at it and know for darn sure that the code does exactly what it is supposed to -- the mental model of the program, and the computer-parsable expression of the program itself, are almost the same. It's like communicating in math. The other one, the mental model "sum the elements in the list" turns into a for loop and an accumulator. No longer math. No longer guaranteed not to have an off-by-one bug.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+The blogger continues:&nbsp;</p><p style=''>
+&nbsp;</p><p style='margin-left:22px'>
+The Scala language is intriguing, quite powerful, but tends toward being illegible when written “properly”. I’m not at all convinced that the average software developer is able to grasp Scala. At least, not beyond the basic abilities that could just as easily be expressed in Java. Heck, from what I can tell there are a lot of software developers who find Java to be beyond their full comprehension.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:22px'>
+Since I don’t have any confidence that the average software developer could understand Scala code that was written to actually take advantage of Scala, I can’t recommend it for application development.&nbsp;</p><p style='margin-left:22px'>
+&nbsp;</p><p style='margin-left:44px'>
+-- same dude at CreativeKarma&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+this is why when you take upper level math courses, they make you learn and use the fancy symbol math language. without that domain language, the problems are just too hard to get right. there's a learning curve, but once you pass the learning curve, you can do things that you couldn't do before. like digital signal processing and theoretical physics. i guess the catch is, not everyone has what it takes to be a physics major. &nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+the business value of software isn't how well an "average developer" can understand it. users judge a piece of software on how well it works and how buggy it is. "Linus is so smart, I never could have written git! i can't make any sense of the code!" well, yeah. maybe you shouldn't hire average developers.&nbsp;</p><p style=''>
+&nbsp;</p><p style=''>
+as problems become non-trivial, "provability" and "correctness" and "conciseness" actually do make the code simpler, thus easier to maintain and easier to get right the first time, thus long-run less expensive to build. Maybe you can even build something that would have been too hard/complicated to otherwise execute.&nbsp;</p>

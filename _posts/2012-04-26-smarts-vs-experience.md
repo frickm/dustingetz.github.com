@@ -3,6 +3,8 @@ layout: post
 title: smarts vs experience
 ---
 
+# {{ page.title }}
+
 Justin Kan (of Justin.tv) reflects back when he was young. This is a great post, read it here: http://justinkan.com/what-good-is-experience
 
 The gist quoted here. It's interesting because its not often we get to hear from someone who is successfu reflecting back upon when he was younger. That's invaluable to us younger folks.

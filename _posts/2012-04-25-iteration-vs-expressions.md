@@ -3,7 +3,7 @@ layout: post
 title: higher-level iteration
 ---
 
-# {{ post.title }}
+# {{ page.title }}
 
 this is inspired by and loosely based on [Ned Batchedler's talk about iteration in python](http://nedbatchelder.com/text/iter.html).
 

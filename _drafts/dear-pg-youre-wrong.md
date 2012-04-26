@@ -1,0 +1,6 @@
+
+http://news.ycombinator.com/item?id=3694672
+To PG:
+many of your essays have an air of someone who already gets it circle jerking[1] with the other people who already get it. You do it when you talk about Lisp, and when you talk about big companies, and you're now doing it by comparing copyright infringement to "stealing smells". Its unfortunate because it builds a cult or clique of people who "get it" rather than helps to spread an idea to the masses. It's also unfortunate because you outright dismisses other people's opinions, which is arrogant, and dangerous.
+The "in crowd" understands your metaphor, but to the people who matter, those who don't already understand the issue, your metaphor is worse than useless - its actually harming our credibility. Quite easy to imagine a RIAA lawyer tearing your analogy to pieces, you know, by DH6: refuting your central point. You're arguing against an opponent without demonstrating that you even understand their argument. that's, like, what, DH3? I wish you would strive to use the incredible influence you've built up more effectively, and refocus away from the startup crowd, and towards the wider audience of people who could stand to learn something from you.
+[*] DH3: http://www.paulgraham.com/disagree.html [1] "circle jerk" - i paused on this metaphor for a few moments, but i can't think of a better one!

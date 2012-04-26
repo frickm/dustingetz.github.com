@@ -1,0 +1,16 @@
+
+
+http://news.ycombinator.com/item?id=3838274
+in which i tell you to take a look around outside your little bubble,
+posts on coffeescript (and all posts about software) need to be taken in context. This post's context, it seems, is the type of problem where your pain points are, it seems, "javascript: the bad parts". Coffeescript is pretty great at cleaning up the bad parts and if that's your pain point on a daily basis then coffeescript is probably great for your team.
+there are other classes of problems where your pain points are different - e.g. layers upon layers of inheritance hierarchies, complexity on top of complexity, bringing feature development pace to a crawl. Teams where all of the grizzled engineers know javascript cold, know the idioms and thus are rarely bit by "javascript: the bad parts". Switching from javascript to coffeescript provides at most a small, incremental improvement to this class of problems. These are the teams that are laughing at the OP. These teams are also a hell of a lot more interested in ClojureScript, because it brings with it a whole new toolbox of idioms to solve problems of complexity.
+i think you one could take all the coffeescript blog posts, and sort them into buckets of "loves coffeescript" and "just doesn't care", and these buckets align perfectly with the two categories of problem i described.
+Saying "at Posterous, they use it but don’t have any real JavaScript engineers" is ad hominem and uncalled for, but if you squint past his tone, he's saying: there are different kinds of software, and some problems are harder than others, and it ain't one tool fits all.
+
+http://news.ycombinator.com/item?id=3671263
+6 points by dustingetz 50 days ago | link | parent | on: CoffeeScript and Progress
+
+he's missed the point. people aren't saying that "CoffeeScript is a priori somehow wrong or inferior or a bad choice". Coffeescript is an abstraction, and abstractions have potential to leak, so some people are questioning whether the benefits of coffeescript - namely, prettier code - are "worth it" for production-scale projects.
+as your project gets big, does coffeescript help us write more maintainable code, better abstract our solutions so we can keep less things in our head at once, resulting in higher agility and fewer bugs? When you look at the deep reasons why a large codebase went sour, you're not blaming it on things like list comprehensions, you're blaming it on things like "Java strong-arms us towards building abstractions with only OOP, which over the course of a few years builds into indecipherable layers of implementation inheritance, causing high defect rates and much decreased agility".
+The difference between CoffeeScript and Javascript, in terms of what a team can accomplish, hasn't been proven in production-scale projects. they may be, or maybe only for some teams, or maybe they aren't, but you can't debate something without being able to articulate the opponent's position.
+update: interestingly, ClojureScript may be a language where the productivity delta from javascript is much larger, and is better worth it. clojurescript introduces new ideas and idioms to the js community, where coffeescript is an incremental update to javascript with no new ideas.

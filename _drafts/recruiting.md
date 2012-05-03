@@ -49,3 +49,13 @@ That's why I'm still here. I believe in this business, and when interviewees ask
 
 
 careful, some of those dime-a-dozen java devs are solving way harder problems than the hipsters and their rails CMSs. strong rails hipsters grow up to be VP of some ycombinator webapp. strong enterprise devs grow up to become VP at google.
+
+
+
+http://news.ycombinator.com/item?id=3919789
+OP uses the word "rejected" 9 times.
+A-level hiring is not about rejection. A-players aren't looking for a "job" and A-managers aren't trying to build an assembly line. It's about finding a mutual relationship where the whole is greater than the sum of its parts, and that requires a lot of things to come together.
+> As a startup, if you have the opportunity to bring on an A player in a low risk role (like an internship), you do it
+All circumstances are different, so maybe he should have found room for Dan, or maybe not. Engineering quality (and talent in general) is on a power law distribution. When you consider engineering quality to be a competitive advantage (not all startups, even YC startups, need this), your early hires are your future managers, and will tend to influence the future hires. Its tough to attract and close people smarter/better than you.
+I imagine myself now at age 26 (pretty decent engineer, doing functional programming and stuff), and compare to age 21 (cocky, overconfident) and while I was smart and driven and all that, it doesn't mean I can contribute to a rockstar team. I would drown and get left behind. World class teams at the top of the power law distribution, say the Clojure team[1], at age 21 I'd be a few orders of magnitude behind them and just not worth paying. at age 26, who knows, probably still at least 1 order of magnitude behind, not worth hiring. Square peg, round hole. At least I can see my trajectory of exponential growth over the last 5 years, and if that keeps up another decade, I can build or join a team like that.
+[1] http://thinkrelevance.com/team

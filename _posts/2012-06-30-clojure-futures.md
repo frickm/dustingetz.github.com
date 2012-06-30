@@ -28,7 +28,8 @@ We spent a solid hour or two thinking about different approaches based on Clojur
             track-favoriters (future (get-track-favoriters user track))
             favoriters-favorites (future (get-favoriters-favorites @track-favoriters))
             sorted-favoriters (future (sort-users-by-similarity user @track-favoriters))
-            top-favoriter (future @sorted-favoriters)]
+            top-favoriter (future @sorted-favoriters)] ;simplified this to not be a
+                                                       ;list as proof of concept
         (future (get-user-favorites @top-favoriter))))
 
 and mock out the queries with sleeps.
@@ -42,10 +43,10 @@ and mock out the queries with sleeps.
       2)
 
     (defn get-favoriters-favorites [favoriters]
-      (let [results []]
+    (let [results []] ;non-idiomatic hack because we were being bitten by lazy map
         (dotimes [n 10]
           (conj results (future (get-user-favorites nil))))
-        (map deref results))
+        (map deref results)) ;`deref` is a function that performs `@`
       (prn 3)
       3)
 

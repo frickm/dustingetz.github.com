@@ -11,3 +11,4 @@ I gave this lightning talk at Philly RedSnake 2012.
 
 - [slides](https://docs.google.com/present/view?id=dv9r8sv_82cn7dngcq)
 - [video](http://www.ustream.tv/recorded/20611452) (starts at 1:50, sorry about the ad)
+- [source](https://github.com/dustingetz/sandbox/blob/22aa8ee7ddb802423733c9a488d49f7e6129ed9a/contuations/reactor.rb)

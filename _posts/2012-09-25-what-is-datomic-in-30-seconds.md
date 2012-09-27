@@ -11,7 +11,7 @@ Datomic is a functional database. Targetted at enterprise applications, meant to
 
 Database is immutable (a persistent data structure). Clojure's philosophy (functional programming philosophy, really) applied to a database.
 
-Datomic achieves full ACID (atomicity, consistency, isolation, durability) compliance while also gaining many of
+Datomic achieves full ACID (atomicity, consistency, isolation, durability) compliance while also gaining horizontal read scalability (spread across many machines).
 
 ## database is an immutable value
 

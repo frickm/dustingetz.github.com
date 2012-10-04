@@ -7,7 +7,7 @@ title: implement python generators without yield
 
 here are some [python examples of how to actually implement generators][1] as if python did not provide syntactic sugar for them (or in a language without native syntax, like javascript). snippets from that link below. This code runs, type it into a repl.
 
-**fib as a python generator:**
+## fib as a python generator:
 
     from itertools import islice
 
@@ -19,12 +19,27 @@ here are some [python examples of how to actually implement generators][1] as if
 
     assert [1, 1, 2, 3, 5] == list(islice(fib_gen(), 5))
 
+## using object closures instead of generators
 
-**using lexical closures instead of generators** (well, technically, python doesn't have proper lexical scope, so we're going to store the state on the fn explicitly.)
+Because [ClosuresAndObjectsAreEquivalent][2]. This is really the same thing as the above.
 
     def ftake(fnext, N):
         "take the next N elements from a sequence"
         return [fnext() for _ in xrange(N)]
+
+    class fib_gen3:
+        def __init__(self):
+            self.a, self.b = 1, 1
+
+        def __call__(self):
+            r = self.a
+            self.a, self.b = self.b, self.a + self.b
+            return r
+
+    assert [1,1,2,3,5] == ftake(fib_gen3(), 5)
+
+
+## python functions are just objects
 
     def fib_gen2():
         #funky scope due to python2.x workaround
@@ -37,18 +52,23 @@ here are some [python examples of how to actually implement generators][1] as if
 
     assert [1,1,2,3,5] == ftake(fib_gen2(), 5)
 
-**using object closures instead of generators** (because [ClosuresAndObjectsAreEquivalent][2])
+## lexical closures
 
-    class fib_gen3:
-        def __init__(self):
-            self.a, self.b = 1, 1
+Python doesn't have proper lexical closures, but Python3 has the `nonlocal` keyword, which is close. Languages with proper lexical scope don't need a special keyword.
 
-        def __call__(self):
-            r = self.a
-            self.a, self.b = self.b, self.a + self.b
-            return r
+    ## python3, untested
+    def fib_gen4():
+        a, b = 0, 1
+        def _():
+            nonlocal a, b
+            a, b = b, a+b
+            return a
+        return _
 
-    assert [1,1,2,3,5] == ftake(fib_gen3(), 5)
+    assert [1,1,2,3,5] == ftake(fib_gen2(), 5)
+
+
+
 
 
   [1]: https://github.com/dustingetz/sandbox/blob/master/etc/lazy.py

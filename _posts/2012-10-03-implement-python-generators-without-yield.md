@@ -1,6 +1,6 @@
 ---
 layout: post
-title: implement python generators without 'yield'
+title: implement python generators without yield
 ---
 
 # {{ page.title }}

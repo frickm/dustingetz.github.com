@@ -5,7 +5,7 @@ title: Dustin's awesome monad tutorial for humans, in Python
 
 # {{ page.title }}
 
-*[ed: this is a draft, and progressing pretty rapidly with dramatic changes each iteration. account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)]*
+*ed: this is a draft, and progressing pretty rapidly with dramatic changes each iteration. account example from [tumult on hackernews](http://news.ycombinator.com/item?id=1275860)*
 
 > A monad is a monoid in the category of endofunctors, what's the problem?
 > -- [James Iry](http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html)
@@ -316,11 +316,9 @@ I've changed the way the bind looks now. If you squint at it in the right light,
 
 The pattern we see here, bind-bind-...-bind-unit, is the way we will write it from here on out.
 
-This is the point where Python fails us: we need macros to fix up this syntax. There's a clear pattern which we cannot abstract further with macros, that we cann't abstract with just higher order functions*. Clojure provides a macro called `monad` which takes something that looks like a list comprehension, and re-writes it into the nested bind form we see here. If you squint at this the right way, the usage is very similar to a native list comprehension, and in fact with macros, we would be able to have equivalent syntax to list comprehensions. Oh well.
+This is the point where Python fails us: we need macros to fix up this syntax. There's a clear pattern which we cannot abstract further without macros, that we cann't abstract with just higher order functions. Clojure provides a macro called `monad` which takes something that looks like a list comprehension, and re-writes it into the nested bind form we see here. If you squint at this the right way, the usage is very similar to a native list comprehension, and in fact with macros, we would be able to have equivalent syntax to list comprehensions. Oh well.
 
 I'm hand-waving over this a bit, you don't need to deeply understand this pattern in order to be able to wield it.
-
-\* (TODO is this even true? can you abstract this further without macros? how would it look?)
 
 OK, now lets apply it to our banking example.
 

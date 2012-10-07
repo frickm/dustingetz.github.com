@@ -5,7 +5,7 @@ title: implement python generators without yield
 
 # {{ page.title }}
 
-here are some [python examples of how to actually implement generators][1] as if python did not provide syntactic sugar for them (or in a language without native syntax, like javascript). snippets from that link below. This code runs, type it into a repl.
+here are some [python examples of how to actually implement generators](https://github.com/dustingetz/sandbox/blob/master/etc/lazy.py) as if python did not provide syntactic sugar for them (or in a language without native syntax, like javascript). snippets from that link below. This code runs, type it into a repl.
 
 ## fib as a python generator:
 
@@ -19,9 +19,25 @@ here are some [python examples of how to actually implement generators][1] as if
 
     assert [1, 1, 2, 3, 5] == list(islice(fib_gen(), 5))
 
+## lexical closures
+
+Python doesn't have proper lexical closures, but Python3 has the `nonlocal` keyword, which is close. Languages with proper lexical scope don't need a special keyword.
+
+    ## python3, untested
+    def fib_gen4():
+        a, b = 0, 1
+        def _():
+            nonlocal a, b   # lift vars to enclosing scope
+            a, b = b, a+b
+            return a
+        return _
+
+    assert [1,1,2,3,5] == ftake(fib_gen2(), 5)
+
+
 ## using object closures instead of generators
 
-Because [ClosuresAndObjectsAreEquivalent][2]. This is really the same thing as the above.
+Because [ClosuresAndObjectsAreEquivalent](http://c2.com/cgi/wiki?ClosuresAndObjectsAreEquivalent). This is really the same thing as the above.
 
     def ftake(fnext, N):
         "take the next N elements from a sequence"
@@ -51,25 +67,3 @@ Because [ClosuresAndObjectsAreEquivalent][2]. This is really the same thing as t
         return _
 
     assert [1,1,2,3,5] == ftake(fib_gen2(), 5)
-
-## lexical closures
-
-Python doesn't have proper lexical closures, but Python3 has the `nonlocal` keyword, which is close. Languages with proper lexical scope don't need a special keyword.
-
-    ## python3, untested
-    def fib_gen4():
-        a, b = 0, 1
-        def _():
-            nonlocal a, b
-            a, b = b, a+b
-            return a
-        return _
-
-    assert [1,1,2,3,5] == ftake(fib_gen2(), 5)
-
-
-
-
-
-  [1]: https://github.com/dustingetz/sandbox/blob/master/etc/lazy.py
-  [2]: http://c2.com/cgi/wiki?ClosuresAndObjectsAreEquivalent

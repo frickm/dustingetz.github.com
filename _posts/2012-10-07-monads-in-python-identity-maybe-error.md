@@ -3,6 +3,8 @@ layout: post
 title: intro to monads in python. identity, maybe, error
 ---
 
+# {{ page.title }}
+
 Strange Loop 2012 slides in blog form. Monads by example in python - the basics.
 
 lots of code, pay attention to the composition. here we go!

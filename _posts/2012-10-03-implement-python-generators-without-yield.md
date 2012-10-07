@@ -9,15 +9,17 @@ here are some [python examples of how to actually implement generators](https://
 
 ## fib as a python generator:
 
-    from itertools import islice
+{% highlight python %}
+from itertools import islice
 
-    def fib_gen():
-        a, b = 1, 1
-        while True:
-            yield a
-            a, b = b, a + b
+def fib_gen():
+    a, b = 1, 1
+    while True:
+        yield a
+        a, b = b, a + b
 
-    assert [1, 1, 2, 3, 5] == list(islice(fib_gen(), 5))
+assert [1, 1, 2, 3, 5] == list(islice(fib_gen(), 5))
+{% endhighlight %}
 
 ## lexical closures
 

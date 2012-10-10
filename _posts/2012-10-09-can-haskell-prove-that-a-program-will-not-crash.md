@@ -36,4 +36,6 @@ so given an expression that is not ⊥ and is not inside IO, this expression can
 
 so in effect, an expression of type `int -> int`, will only crash in the same ways that math can 'crash' on pencil and paper.
 
-Which means that if we're reasonably confident that our program isn't ⊥ (do you really worry about the halting problem in your business application?), **if your program passes the type checker, it will not crash. ever.**
+Which means that if we're confident that our program isn't ⊥ (do you really worry about the halting problem in your business application?), **if your program passes the type checker, it will not crash. ever.**
+
+(Unless it runs out of memory, or you unplug it, ...)

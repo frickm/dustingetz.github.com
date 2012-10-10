@@ -1,4 +1,4 @@
----
+m---
 layout: post
 title: can Haskell prove that a program will not crash?
 ---
@@ -14,6 +14,10 @@ This question is interesting becauase it means we can use the type system to pro
 Answering this requires understanding the concept of ⊥, pronounced 'bottom'. From [wikipedia, bottom type](http://en.wikipedia.org/wiki/Bottom_type)
 
 > In type theory, a theory within mathematical logic, the bottom type is the type that has no values. It is also called the zero or empty type, and is sometimes denoted with falsum (⊥). A function whose return type is bottom cannot return any value.
+
+This is tightly related to the [Halting problem](http://en.wikipedia.org/wiki/Halting_problem):
+
+> Given a description of an arbitrary computer program, decide whether the program finishes running or continues to run forever". ... Alan Turing proved in 1936 that a general algorithm to solve the halting problem for all possible program-input pairs cannot exist. A key part of the proof was a mathematical definition of a computer and program, what became known as a Turing machine; the halting problem is undecidable over Turing machines.
 
 In haskell, all of the following are suitable definitions of ⊥:
  * `length [1..]` -- never terminates
@@ -31,3 +35,5 @@ We can provide `safeDiv` which returns, e.g., `Maybe`, but the haskell-provided 
 so given an expression that is not ⊥ and is not inside IO, this expression cannot "crash" unless said error condition is defined on the expression's type.
 
 so in effect, an expression of type `int -> int`, will only crash in the same ways that math can 'crash' on pencil and paper.
+
+Which means that if we're reasonably confident that our program isn't ⊥ (do you really worry about the halting problem in your business application?), if your program passes the type checker, *it will not crash. ever.*

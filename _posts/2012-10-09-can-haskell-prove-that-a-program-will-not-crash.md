@@ -11,10 +11,14 @@ In haskell, can an arbitrary expression, that is not inside IO monad, be proved 
 
 This question is interesting becauase it means we can use the type system to prove that our business logic will never crash, other than IO errors and unrecoverables like out of memory due to us choosing to evaluate our program on a finite register machine, rather than in our brain.
 
-all of the following are suitable definitions of ⊥, pronounced 'bottom':
- * length [1..] -- non termination
- * div 1 0 -- integer div by zero
- * error "hello" -- a special form defined as ⊥
+Answering this requires understanding the concept of ⊥, pronounced 'bottom'. From [wikipedia, bottom type](http://en.wikipedia.org/wiki/Bottom_type)
+
+> In type theory, a theory within mathematical logic, the bottom type is the type that has no values. It is also called the zero or empty type, and is sometimes denoted with falsum (⊥). A function whose return type is bottom cannot return any value.
+
+In haskell, all of the following are suitable definitions of ⊥:
+ * `length [1..]` -- never terminates
+ * `div 1 0` -- Exception: divide by zero
+ * `error "hello"` -- a special form which terminates the program
 
 evaluating ⊥ has undefined behavior but GHC will try to detect it and quit to be nice.
 

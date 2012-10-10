@@ -26,7 +26,7 @@ assert [1, 1, 2, 3, 5] == list(islice(fib_gen(), 5))
 Python doesn't have proper lexical closures, but Python3 has the `nonlocal` keyword, which is close. Languages with proper lexical scope don't need a special keyword.
 
 {% highlight python %}
-## python3, untested
+# python3, untested
 def fib_gen4():
     a, b = 0, 1
     def _():
@@ -75,3 +75,31 @@ def fib_gen2():
 
 assert [1,1,2,3,5] == ftake(fib_gen2(), 5)
 {% endhighlight %}
+
+## how about pure functional?
+
+{% highlight python %}
+def fib_gen2():
+    #funky scope due to python2.x workaround
+    #for python 3.x use nonlocal
+    def _():
+        _.a, _.b = _.b, _.a + _.b
+        return _.a
+    _.a, _.b = 0, 1  # this state is shared across all calls to the fn
+    return _
+
+assert [1,1,2,3,5] == ftake(fib_gen2(), 5)
+{% endhighlight %}
+
+
+
+## state monad. holla
+
+def unit(v):                  # monadic value is a fn of environment, which
+    return lambda env: (v, env)     # returns a value wrapped up with a new environment
+
+def bind(mv, mf):
+    def _env_mv(env):               # good luck
+        val, newenv = mv(env)
+        return mf(val)(newenv)
+    return _env_mv

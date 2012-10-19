@@ -5,11 +5,11 @@ title: can Haskell prove that a program will not crash?
 
 # {{ page.title }}
 
-In haskell, can an arbitrary expression, that is not inside IO monad, be proved to not crash, because it passed the type checker?
+In haskell, can an arbitrary expression, that is not inside IO monad -- that is, it has no side effects -- be proved to not crash, because it passed the type checker?
 
-(In practice all haskell programs are in IO, otherwise they don't do anything other than turn electricity into heat. Whatever.)
+(In practice all haskell programs have side effects, otherwise they don't do anything other than turn electricity into heat. Whatever.)
 
-This question is interesting becauase it means we can use the type system to prove that our business logic will never crash, other than IO errors and unrecoverables like out of memory due to us choosing to evaluate our program on a finite register machine, rather than in our brain.
+This question is interesting becauase it means we could use the type system to prove that our business logic will never crash, other than IO errors and unrecoverables like out of memory due to us choosing to evaluate our program on a finite register machine, rather than in our brain.
 
 Answering this requires understanding the concept of ⊥, pronounced 'bottom'. From [wikipedia, bottom type](http://en.wikipedia.org/wiki/Bottom_type)
 

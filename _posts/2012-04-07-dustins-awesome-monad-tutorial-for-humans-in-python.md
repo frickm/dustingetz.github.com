@@ -49,7 +49,7 @@ this is how we might use this API:
         balance = get_balance(userid)
         if not balance:
             return None
-        loan = get_loan(balance)
+        loan = qualified_amount(balance)
         if not loan:
             return None
         return loan
